@@ -49,14 +49,14 @@ class OrangeMoneyTokenGenerator
     public function getToken()
     {
         $response = $this->http->post($this->get_token_url, [
-            'form_paramas' => ['grant_type' => 'client_credentials'],
+            'form_params' => ['grant_type' => 'client_credentials'],
             'headers' => ['Authorization' => 'Basic ' . $this->header]
         ]);
         
         // Get the response content
         $content = $response->getBody()->getContents();
         
-        $token = json_encode($content);
+        $token = json_decode($content);
         
         return new OrangeMoneyToken(
             $token->access_token,

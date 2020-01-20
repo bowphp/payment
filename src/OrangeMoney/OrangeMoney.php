@@ -133,4 +133,15 @@ class OrangeMoney
     {
         $this->currency = $currency;
     }
+
+    /**
+     * Set the merchand id
+     * 
+     * @param string $merchant_id
+     * @return mixed
+     */
+    public function setMerchandId($merchant_id)
+    {
+        $this->merchant_id = $merchant_id;
+    }
 }

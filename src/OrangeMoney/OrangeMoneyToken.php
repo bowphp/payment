@@ -50,4 +50,44 @@ class OrangeMoneyToken
     {
         return $this->token_type . ' ' . $this->access_token;
     }
+
+    /**
+     * Get the access token
+     * 
+     * @return string
+     */
+    public function getAccessToken()
+    {
+        return $this->access_token;
+    }
+
+    /**
+     * Get the token type
+     * 
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->token_type;
+    }
+
+    /**
+     * Get the expiration time
+     * 
+     * @return string
+     */
+    public function getExpiresIn()
+    {
+        return $this->expires_in;
+    }
+
+    /**
+     * Get the expiration time
+     * 
+     * @return string
+     */
+    public function hasExpired()
+    {
+        return $this->expires_in;
+    }
 }
