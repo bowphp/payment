@@ -3,7 +3,8 @@
     "description": "The gateway for all paymemt system for Bow Framwork",
     "type": "library",
     "require": {
-        "guzzlehttp/guzzle": "^6.5"
+        "guzzlehttp/guzzle": "^6.5",
+        "phpunit/phpunit": "^8.5"
     },
     "license": "MIT",
     "authors": [
