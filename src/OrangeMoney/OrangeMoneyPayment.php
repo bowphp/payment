@@ -92,9 +92,16 @@ class OrangeMoneyPayment
             ]
         ]);
 
-        var_dump($response->getBody()->getContents());
+        // Parse Json data
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        return new OrangeMoney(
+            $data['payment_url'],
+            $data['pay_token'],
+            $data['notif_token']
+        );
     }
-    
+
     /**
      * Set the return url when the payment have successful
      *
