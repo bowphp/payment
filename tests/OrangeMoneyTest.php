@@ -22,14 +22,14 @@ class OrangeMoneyTest extends \PHPUnit\Framework\TestCase
         $token = $this->getMockBuilder(OrangeMoneyToken::class)
             ->disableOriginalConstructor()->getMock();
         
-        $orange = $this->getMockBuilder(OrangeMoney::class)
+        $payment = $this->getMockBuilder(OrangeMoneyPayment::class)
             ->setConstructorArgs([$token, 123456])
-            ->setMethods(['pay'])->getMock();
+            ->setMethods(['prepare'])->getMock();
 
-        $payment_status = $this->createMock(OrangeMoneyPayment::class);
-        $orange->method('pay')
+        $payment_status = $this->createMock(OrangeMoney::class);
+        $payment->method('prepare')
             ->willReturn($payment_status);
 
-        $this->assertInstanceOf(OrangeMoneyPayment::class, $orange->pay(500, 'reference', 1));
+        $this->assertInstanceOf(OrangeMoney::class, $payment->prepare(500, 'reference', 1));
     }
 }
