@@ -85,10 +85,10 @@ class OrangeMoneyPayment
     {
         $response = $this->http->post($this->pay_url, [
             'json' => $this->buildRequestData($amount, $reference, $order_id),
-            "headers" => [
-                "Authorization" => (string) $this->token,
-                "Accept" => "application/json",
-                "Content-Type" => "application/json"
+            'headers' => [
+                'Authorization' => (string) $this->token,
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json'
             ]
         ]);
 
