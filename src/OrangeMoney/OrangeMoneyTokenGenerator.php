@@ -34,9 +34,9 @@ class OrangeMoneyTokenGenerator
      */
     public function __construct($header)
     {
-        $this->http = new HttpClient;
+        $this->http = new HttpClient(['base_uri' => 'https://api.orange.com']);
         
-        $this->get_token_url = 'https://api.orange.com/oauth/v2/token';
+        $this->get_token_url = '/oauth/v2/token';
         
         $this->header = $header;
     }
