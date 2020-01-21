@@ -158,7 +158,7 @@ class OrangeMoneyPayment
      *
      * @param float $amount
      * @param string $reference
-     * @param mixed $order_id
+     * @param string $order_id
      * @return array
      */
     protected function buildRequestData($amount, $reference, $order_id)
@@ -166,7 +166,7 @@ class OrangeMoneyPayment
         return [
             "merchant_key" => $this->merchant_key,
             "currency" => $this->currency,
-            "order_id" => $order_id,
+            "order_id" => (string) $order_id,
             "amount" => $amount,
             "return_url" => $this->return_url,
             "cancel_url" => $this->cancel_url,
