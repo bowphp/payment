@@ -58,6 +58,8 @@ class OrangeMoneyPayment
     /**
      * OrangeMoney contructor
      *
+     * @param OrangeMoneyToken $token
+     * @param string $merchant_id
      * @return mixed
      */
     public function __construct(OrangeMoneyToken $token, $merchant_id)
@@ -81,6 +83,15 @@ class OrangeMoneyPayment
      */
     public function prepare($amount, $order_id, $reference)
     {
+        var_dump([
+            'json' => $this->buildRequestData($amount, $reference, $order_id),
+            "headers" => [
+                "Authorization" => (string) $this->token,
+                "Accept" => "application/json",
+                "Content-Type" => "application/json"
+            ]
+        ]);
+        die();
         $response = $this->http->post($this->pay_url, [
             'json' => $this->buildRequestData($amount, $reference, $order_id),
             "headers" => [
