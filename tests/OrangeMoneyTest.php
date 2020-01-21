@@ -1,7 +1,7 @@
 <?php
 
 use Bow\Payment\OrangeMoney\OrangeMoney;
-use Bow\Payment\OrangeMoney\OrangeMoneyPaymentStatus;
+use Bow\Payment\OrangeMoney\OrangeMoneyPayment;
 use Bow\Payment\OrangeMoney\OrangeMoneyToken;
 use Bow\Payment\OrangeMoney\OrangeMoneyTokenGenerator;
 
@@ -26,10 +26,10 @@ class OrangeMoneyTest extends \PHPUnit\Framework\TestCase
             ->setConstructorArgs([$token, 123456])
             ->setMethods(['pay'])->getMock();
 
-        $payment_status = $this->createMock(OrangeMoneyPaymentStatus::class);
+        $payment_status = $this->createMock(OrangeMoneyPayment::class);
         $orange->method('pay')
             ->willReturn($payment_status);
 
-        $this->assertInstanceOf(OrangeMoneyPaymentStatus::class, $orange->pay(500, 'reference', 1));
+        $this->assertInstanceOf(OrangeMoneyPayment::class, $orange->pay(500, 'reference', 1));
     }
 }

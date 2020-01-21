@@ -73,25 +73,23 @@ class OrangeMoney
     
     /**
      * Make payment
-     *
-     * @return
+     * 
+     * @param float $amount
+     * @param mixed $order_id
+     * @param mixed $reference
+     * @return OrangeMoneyPayment
      */
-    public function pay($amount, $reference, $order_id)
+    public function prepare($amount, $order_id, $reference)
     {
         $response = $this->http->post($this->pay_url, [
-            'form_params' => [
-                "merchant_key" => $this->merchant_id,
-                "currency" => $this->currency,
-                "order_id" => $order_id,
-                "amount" => $amount,
-                "return_url" => $this->return_url,
-                "cancel_url" => $this->cancel_url,
-                "notif_url" => $this->notif_url,
-                "lang" => "fr",
-                "reference" => $reference
-            ],
-            "headers" => [ "Authorization" => $this->token ]
+            'json' => $this->buildRequestData($amount, $reference, $order_id),
+            "headers" => [
+                "Authorization" => (string) $this->token,
+                "Accept" => "application/json"
+            ]
         ]);
+
+        var_dump($response->getBody()->getContents());
     }
     
     /**
@@ -143,5 +141,28 @@ class OrangeMoney
     public function setMerchandId($merchant_id)
     {
         $this->merchant_id = $merchant_id;
+    }
+
+    /**
+     * Build the request data
+     * 
+     * @param float $amount
+     * @param string $reference
+     * @param mixed $order_id
+     * @return array
+     */
+    protected function buildRequestData($amount, $reference, $order_id)
+    {
+        return [
+            "merchant_key" => $this->merchant_id,
+            "currency" => $this->currency,
+            "order_id" => $order_id,
+            "amount" => $amount,
+            "return_url" => $this->return_url,
+            "cancel_url" => $this->cancel_url,
+            "notif_url" => $this->notif_url,
+            "lang" => "fr",
+            "reference" => $reference
+        ];
     }
 }

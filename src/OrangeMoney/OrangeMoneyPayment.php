@@ -2,7 +2,7 @@
 
 namespace Bow\Payment\OrangeMoney;
 
-class OrangeMoneyPaymentStatus
+class OrangeMoneyPayment
 {
     /**
      * OrangeMoneyPaymentStatus constructor
@@ -25,10 +25,24 @@ class OrangeMoneyPaymentStatus
      *
      * @return mixed
      */
-    public function redirect()
+    public function pay()
     {
         header('Location: ' . $this->payment_url);
         die();
+    }
+
+    /**
+     * Get all information information about the pending payment
+     * 
+     * @return array
+     */
+    public function getPaymentInfo()
+    {
+        return [
+            "pay_token" => $this->pay_token,
+            "payment_url" => $this->payment_url,
+            "notif_token" => $this->notif_token
+        ];
     }
     
     /**
@@ -38,10 +52,6 @@ class OrangeMoneyPaymentStatus
      */
     public function __toString()
     {
-        return json_encode([
-            $this->pay_token,
-            $this->payment_url,
-            $this->notif_token
-        ]);
+        return json_encode($this->getPaymentInfo());
     }
 }
