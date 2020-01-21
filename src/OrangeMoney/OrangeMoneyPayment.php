@@ -83,7 +83,7 @@ class OrangeMoneyPayment
      */
     public function prepare($amount, $order_id, $reference)
     {
-        $response = $this->http->post($this->pay_url, [
+        $response = $this->http->post('http://localhost:5000/server.php', [
             'json' => $this->buildRequestData($amount, $reference, $order_id),
             "headers" => [
                 "Authorization" => (string) $this->token,
@@ -92,9 +92,16 @@ class OrangeMoneyPayment
             ]
         ]);
 
-        var_dump($response->getBody()->getContents());
+        // Parse Json data
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        return new OrangeMoney(
+            $data['payment_url'],
+            $data['pay_token'],
+            $data['notif_token']
+        );
     }
-    
+
     /**
      * Set the return url when the payment have successful
      *
