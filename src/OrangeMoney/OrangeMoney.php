@@ -33,7 +33,7 @@ class OrangeMoney
 
     /**
      * Get all information information about the pending payment
-     * 
+     *
      * @return array
      */
     public function getPaymentInformation()

@@ -73,7 +73,7 @@ class OrangeMoneyPayment
     
     /**
      * Make payment
-     * 
+     *
      * @param float $amount
      * @param mixed $order_id
      * @param mixed $reference
@@ -135,7 +135,7 @@ class OrangeMoneyPayment
 
     /**
      * Set the merchand id
-     * 
+     *
      * @param string $merchant_id
      * @return mixed
      */
@@ -146,7 +146,7 @@ class OrangeMoneyPayment
 
     /**
      * Build the request data
-     * 
+     *
      * @param float $amount
      * @param string $reference
      * @param mixed $order_id

@@ -26,6 +26,13 @@ class OrangeMoneyToken
     private $expires_in;
     
     /**
+     * The realy time for token expiration
+     *
+     * @var int
+     */
+    private $expires_realy_in;
+    
+    /**
      * OrangeMoneyToken constructor
      *
      * @param string $access_token
@@ -39,6 +46,8 @@ class OrangeMoneyToken
         $this->token_type = $token_type;
         
         $this->expires_in = $expires_in;
+
+        $this->expires_realy_in = (time() + $expires_in) - 5;
     }
     
     /**
@@ -53,7 +62,7 @@ class OrangeMoneyToken
 
     /**
      * Get the access token
-     * 
+     *
      * @return string
      */
     public function getAccessToken()
@@ -63,7 +72,7 @@ class OrangeMoneyToken
 
     /**
      * Get the token type
-     * 
+     *
      * @return string
      */
     public function getType()
@@ -73,7 +82,7 @@ class OrangeMoneyToken
 
     /**
      * Get the expiration time
-     * 
+     *
      * @return string
      */
     public function getExpiresIn()
@@ -83,11 +92,11 @@ class OrangeMoneyToken
 
     /**
      * Get the expiration time
-     * 
+     *
      * @return string
      */
     public function hasExpired()
     {
-        return $this->expires_in;
+        return $this->expires_realy_in - time() <= 0;
     }
 }
