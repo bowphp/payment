@@ -53,22 +53,22 @@ class OrangeMoneyPayment
      *
      * @var string
      */
-    private $merchant_id;
+    private $merchant_key;
     
     /**
      * OrangeMoney contructor
      *
      * @param OrangeMoneyToken $token
-     * @param string $merchant_id
+     * @param string $merchant_key
      * @return mixed
      */
-    public function __construct(OrangeMoneyToken $token, $merchant_id)
+    public function __construct(OrangeMoneyToken $token, $merchant_key)
     {
         $this->token = $token;
         
         $this->http = new HttpClient(['base_uri' => 'https://api.orange.com']);
         
-        $this->merchant_id = $merchant_id;
+        $this->merchant_key = $merchant_key;
         
         $this->currency = 'OUV';
     }
@@ -138,12 +138,12 @@ class OrangeMoneyPayment
     /**
      * Set the merchand id
      *
-     * @param string $merchant_id
+     * @param string $merchant_key
      * @return mixed
      */
-    public function setMerchandId($merchant_id)
+    public function setMerchandId($merchant_key)
     {
-        $this->merchant_id = $merchant_id;
+        $this->merchant_key = $merchant_key;
     }
 
     /**
@@ -157,7 +157,7 @@ class OrangeMoneyPayment
     protected function buildRequestData($amount, $reference, $order_id)
     {
         return [
-            "merchant_key" => $this->merchant_id,
+            "merchant_key" => $this->merchant_key,
             "currency" => $this->currency,
             "order_id" => $order_id,
             "amount" => $amount,
