@@ -176,7 +176,7 @@ class OrangeMoneyPayment
         return [
             "merchant_key" => $this->merchant_key,
             "currency" => $this->currency,
-            "order_id" => (string) $order_id,
+            "order_id" => $order_id,
             "amount" => $amount,
             "return_url" => $this->return_url,
             "cancel_url" => $this->cancel_url,

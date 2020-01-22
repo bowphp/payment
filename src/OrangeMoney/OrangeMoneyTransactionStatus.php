@@ -16,7 +16,7 @@ class OrangeMoneyTransactionStatus
     /**
      * OrangeMoneyTransactionStatus constructor
      *
-     * @param OrangeMoneyTransactionStatus $token
+     * @param OrangeMoneyToken $token
      * @return mixed
      */
     public function __construct(OrangeMoneyToken $token)
@@ -28,10 +28,10 @@ class OrangeMoneyTransactionStatus
      * Check the payment status
      *
      * @param string $order_id
-     * @param int|float $amount
+     * @param int|double $amount
      * @param string $pay_token
      */
-    public function check($order_id, $amount, $pay_token)
+    public function check($amount, string $order_id, string $pay_token)
     {
         $response = (new HttpClient)->post('https://api.orange.com/orange-money-webpay/dev/v1/transactionstatus', [
             "json" => compact('order_id', 'amount', 'pay_token'),
