@@ -1,6 +1,8 @@
-# Bow Payment
+<h1 align="center">
+    <img src="http://oncodesc.com/wp-content/uploads/2017/12/save-money-icon-money_icon.png" width="200" style="border-radius: 50px">
+</h1>
 
-The paymemt gateway for Bow Framwork. Is build for make Bow Framework lovely.
+<p align="center">The paymemt gateway for Bow Framwork. Is build for make Bow Framework lovely.</p>
 
 ## Installation
 
