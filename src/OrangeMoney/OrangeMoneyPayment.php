@@ -76,12 +76,12 @@ class OrangeMoneyPayment
     /**
      * Make payment
      *
-     * @param float $amount
-     * @param mixed $order_id
-     * @param mixed $reference
+     * @param int|double $amount
+     * @param string $order_id
+     * @param string $reference
      * @return OrangeMoney
      */
-    public function prepare($amount, $order_id, $reference)
+    public function prepare($amount, string $order_id, string $reference)
     {
         $response = $this->http->post($this->pay_url, [
             'json' => $this->buildRequestData($amount, $reference, $order_id),
@@ -107,7 +107,7 @@ class OrangeMoneyPayment
      *
      * @param string $url
      */
-    public function setReturnUrl($url)
+    public function setReturnUrl(string $url)
     {
         $this->return_url = $url;
     }
@@ -117,7 +117,7 @@ class OrangeMoneyPayment
      *
      * @param string $url
      */
-    public function setNotifyUrl($url)
+    public function setNotifyUrl(string $url)
     {
         $this->notif_url = $url;
     }
@@ -127,7 +127,7 @@ class OrangeMoneyPayment
      *
      * @param string $url
      */
-    public function setCancelUrl($url)
+    public function setCancelUrl(string $url)
     {
         $this->cancel_url = $url;
     }
@@ -137,7 +137,7 @@ class OrangeMoneyPayment
      *
      * @param string $currency
      */
-    public function setCurrency($currency)
+    public function setCurrency(string $currency)
     {
         $this->currency = $currency;
     }
@@ -148,7 +148,7 @@ class OrangeMoneyPayment
      * @param string $merchant_key
      * @return mixed
      */
-    public function setMerchandId($merchant_key)
+    public function setMerchandId(string $merchant_key)
     {
         $this->merchant_key = $merchant_key;
     }
@@ -156,12 +156,12 @@ class OrangeMoneyPayment
     /**
      * Build the request data
      *
-     * @param float $amount
+     * @param int|double $amount
      * @param string $reference
      * @param string $order_id
      * @return array
      */
-    protected function buildRequestData($amount, $reference, $order_id)
+    protected function buildRequestData($amount, string $reference, string $order_id)
     {
         return [
             "merchant_key" => $this->merchant_key,

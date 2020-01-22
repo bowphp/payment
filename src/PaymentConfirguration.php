@@ -8,7 +8,7 @@ class PaymmentConfirguration extends Configuration
 {
     /**
      * Create payment configuration
-     * 
+     *
      * @param \Bow\Configuration\Loader $config
      */
     public function create(\Bow\Configuration\Loader $config)
@@ -18,7 +18,7 @@ class PaymmentConfirguration extends Configuration
 
     /**
      * Launch configuration
-     * 
+     *
      * @return mixed
      */
     public function run()

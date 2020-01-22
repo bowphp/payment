@@ -39,7 +39,7 @@ class OrangeMoneyToken
      * @param string $token_type
      * @param string $expires_in
      */
-    public function __construct($access_token, $token_type, $expires_in)
+    public function __construct(string $access_token, string $token_type, int $expires_in)
     {
         $this->access_token = $access_token;
         
@@ -83,7 +83,7 @@ class OrangeMoneyToken
     /**
      * Get the expiration time
      *
-     * @return string
+     * @return int
      */
     public function getExpiresIn()
     {

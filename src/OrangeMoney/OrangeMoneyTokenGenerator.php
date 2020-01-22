@@ -25,22 +25,23 @@ class OrangeMoneyTokenGenerator
      *
      * @var string
      */
-    private $header;
+    private $key;
     
     /**
      * OrangeMoney contructor
      *
+     * @param string $key
      * @return mixed
      */
-    public function __construct($header)
+    public function __construct(string $key)
     {
         $this->http = new HttpClient(['base_uri' => 'https://api.orange.com']);
         
         $this->get_token_url = '/oauth/v2/token';
         
-        $this->header = $header;
+        $this->key = $key;
     }
-    
+
     /**
      * Get payment token
      *
@@ -50,7 +51,7 @@ class OrangeMoneyTokenGenerator
     {
         $response = $this->http->post($this->get_token_url, [
             'form_params' => ['grant_type' => 'client_credentials'],
-            'headers' => ['Authorization' => 'Basic ' . $this->header]
+            'headers' => ['Authorization' => 'Basic ' . $this->key]
         ]);
         
         // Get the response content
@@ -71,7 +72,7 @@ class OrangeMoneyTokenGenerator
      * @param string $url
      * @return mixed
      */
-    public function setUrl($url)
+    public function setUrl(string $url)
     {
         $this->get_token_url = $url;
     }
@@ -79,11 +80,11 @@ class OrangeMoneyTokenGenerator
     /**
      * Set the get token url
      *
-     * @param string $header
+     * @param string $key
      * @return mixed
      */
-    public function setHeader($header)
+    public function setClientKey($key)
     {
-        $this->header = $header;
+        $this->key = $key;
     }
 }

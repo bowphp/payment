@@ -9,7 +9,7 @@ class PaymentNotificationController extends Controller
 {
     /**
      * Process payment notification here
-     * 
+     *
      * @param Request $request
      * @return mixed
      */
