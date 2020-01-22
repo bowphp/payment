@@ -143,6 +143,16 @@ class OrangeMoneyPayment
     }
 
     /**
+     * Set the payment route
+     *
+     * @param string $url
+     */
+    public function setPaymentUrl($url)
+    {
+        $this->pay_url = $url;
+    }
+
+    /**
      * Set the merchand id
      *
      * @param string $merchant_key
