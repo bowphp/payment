@@ -1,8 +1,8 @@
-<h1 align="center" style="float: right">
+<p align="center" style="float: right">
     <img src="http://oncodesc.com/wp-content/uploads/2017/12/save-money-icon-money_icon.png" width="150">
-</h1>
+</p>
 
-<p align="left" style="float: left">The paymemt gateway for Bow Framwork. Is build for make Bow Framework lovely.</p>
+<p align="center" style="float: left">The paymemt gateway for Bow Framwork. Is build for make Bow Framework lovely.</p>
 
 <p align="left">
     <a href="https://github.com/bowphp/docs/blog/master/payment.md" title="docs"><img src="https://img.shields.io/badge/docs-read%20docs-blue.svg?style=flat-square"/></a>
