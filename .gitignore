@@ -1,2 +1,4 @@
 vendor
 index.php
+phpunit.xml
+.phpunit.result.cache
