@@ -25,7 +25,8 @@ $order_id = "1579565569";
 $reference = 'reference';
 
 $orange = $payment->prepare($amount, $order_id, $reference);
-var_dump($orange->getPaymentInformation());
+$payment_information = $orange->getPaymentInformation();
+$orange->pay(); // Redirect to payment plateforme
 ```
 
 > But except that this way of doing does not allow to exploit the inheritance system in an optimal way. Use this way of doing things, only if you want to test the package or for small applications.
