@@ -25,7 +25,8 @@ $order_id = "1579565569";
 $reference = 'reference';
 
 $orange = $payment->prepare($amount, $order_id, $reference);
-var_dump($orange->getPaymentInformation());
+$payment_information = $orange->getPaymentInformation();
+$orange->pay(); // Redirige sur la plate de paiement
 ```
 
 > Mais sauf que cette façon de faire ne permet pas d'exploiter le système d'héritage de manière optimale. Utilisez cette façon de faire, uniquement si vous souhaitez tester le package ou pour de petites applications.
