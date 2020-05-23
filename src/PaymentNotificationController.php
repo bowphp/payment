@@ -8,6 +8,16 @@ use Bow\Http\Request;
 class PaymentNotificationController extends Controller
 {
     /**
+     * PaymentNotificationController construct
+     *
+     * @return mixed
+     */
+    public function __construct()
+    {
+        $this->user = config('payment.model');
+    }
+
+    /**
      * Process payment notification here
      *
      * @param Request $request
@@ -15,6 +25,10 @@ class PaymentNotificationController extends Controller
      */
     public function handle(Request $request)
     {
-        //
+        $user_id = $request->get('user_id');
+
+        $user = $this->user->find($user_id);
+
+        $user->payment();
     }
 }
