@@ -1,5 +1,6 @@
 <?php
 
+namespace Bow\Payment\OrangeMoney;
 
 class OrangeMoneyTransactionStatus
 {
