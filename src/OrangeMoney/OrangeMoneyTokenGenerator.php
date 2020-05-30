@@ -69,10 +69,22 @@ class OrangeMoneyTokenGenerator
     /**
      * Set the get token url
      *
+     * @deprecated
      * @param string $url
      * @return mixed
      */
     public function setUrl(string $url)
+    {
+        $this->get_token_url = $url;
+    }
+
+    /**
+     * Set the get token url
+     *
+     * @param string $url
+     * @return mixed
+     */
+    public function setTokenGeneratorEndpoint(string $url)
     {
         $this->get_token_url = $url;
     }

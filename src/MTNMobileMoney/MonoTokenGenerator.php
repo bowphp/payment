@@ -54,11 +54,16 @@ class MomoEnvironment
         $response = $this->http->post('/'.$this->interface_name.'/token', [
             'headers' => $headers
         ]);
+        
+        // Get the response content
+        $content = $response->getBody()->getContents();
+        
+        $token = json_decode($content);
 
         return new MomoToken(
-            $response->access_token,
-            $response->token_type,
-            $response->expires_in
+            $token->access_token,
+            $token->token_type,
+            $token->expires_in
         );
     }
 

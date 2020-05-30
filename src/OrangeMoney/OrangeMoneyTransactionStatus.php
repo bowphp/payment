@@ -1,48 +1,72 @@
 <?php
 
-namespace Bow\Payment\OrangeMoney;
-
-use \GuzzleHttp\Client as HttpClient;
 
 class OrangeMoneyTransactionStatus
 {
     /**
-     * The token generator response
+     * Define the transaction status
      *
-     * @var OrangeMoneyToken
+     * @var string
      */
-    private $token;
+    private $status;
+
+    /**
+     * Define the transaction notif_token
+     *
+     * @var string
+     */
+    private $notif_token;
 
     /**
      * OrangeMoneyTransactionStatus constructor
      *
-     * @param OrangeMoneyToken $token
-     * @return mixed
+     * @param string $status
+     * @param string $notif_token
+     * @return void
      */
-    public function __construct(OrangeMoneyToken $token)
+    public function __construct(string $status, string $notif_token)
     {
-        $this->token = $token;
+        $this->status = strtoupper($status);
+        $this->notif_token = $notif_token;
     }
 
     /**
-     * Check the payment status
+     * Get the notification token
      *
-     * @param string $order_id
-     * @param int|double $amount
-     * @param string $pay_token
+     * @return string
      */
-    public function check($amount, string $order_id, string $pay_token)
+    public function getNotificationToken()
     {
-        $response = (new HttpClient)->post('https://api.orange.com/orange-money-webpay/dev/v1/transactionstatus', [
-            "json" => compact('order_id', 'amount', 'pay_token'),
-            'headers' => [
-                'Authorization' => (string) $this->token,
-                'Content-Type' => "application/json",
-                "Accept" => "application/json"
-            ]
-        ]);
-            
-        // Cast the request response
-        return json_decode($response->getBody()->getContents());
+        return $this->notif_token;
+    }
+
+    /**
+     * Define if transaction fail
+     *
+     * @return bool
+     */
+    public function fail()
+    {
+        return $this->status == 'FAIL';
+    }
+
+    /**
+     * Define if transaction success
+     *
+     * @return bool
+     */
+    public function success()
+    {
+        return $this->status == 'SUCCESS';
+    }
+
+    /**
+     * Define if transaction pending
+     *
+     * @return bool
+     */
+    public function pending()
+    {
+        return $this->status == 'PENDING';
     }
 }
