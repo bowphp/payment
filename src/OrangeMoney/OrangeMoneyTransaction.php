@@ -41,6 +41,17 @@ class OrangeMoneyTransaction
     }
 
     /**
+     * Set transaction status
+     *
+     * @param string $endpoint
+     * @return mixed
+     */
+    public function setTransactinStatusUrl($endpoint)
+    {
+        $this->endpoint = $endpoint;
+    }
+
+    /**
      * Check the payment status
      *
      * @param string $order_id
@@ -49,7 +60,7 @@ class OrangeMoneyTransaction
      */
     public function check($amount, string $order_id, string $pay_token)
     {
-        $response = $this->http->post('/orange-money-webpay/dev/v1/transactionstatus', [
+        $response = $this->http->post($this->endpoint, [
             "json" => compact('order_id', 'amount', 'pay_token'),
             'headers' => [
                 'Authorization' => (string) $this->token,
