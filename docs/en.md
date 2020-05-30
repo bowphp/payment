@@ -40,7 +40,16 @@ $reference = 'reference';
 
 $transaction = new OrangeMoneyTransaction($token_generator->getToken());
 
-$orange = $transaction->check($amount, $order_id, $reference);
+// Check the transaction status
+$status = $transaction->check($amount, $order_id, $reference);
+$status->pending();
+$status->fail();
+$status->success();
+
+// Check the transction status
+$status = $transaction->checkIfHasPending($amount, $order_id, $reference);
+$status = $transaction->checkIfHasSuccess($amount, $order_id, $reference);
+$status = $transaction->checkIfHasFail($amount, $order_id, $reference);
 ```
 
 > But except that this way of doing does not allow to exploit the inheritance system in an optimal way. Use this way of doing things, only if you want to test the package or for small applications.
@@ -77,4 +86,20 @@ $reference = 'reference';
 $orange = $payment->prepare($amount, $order_id, $reference);
 $payment_information = $orange->getPaymentInformation();
 $orange->pay(); // Redirect to payment plateforme
+```
+
+## Check transaction
+
+```php
+// Transaction status
+$transaction = new OrangeMoneyTransaction($token_generator->getToken());
+
+// Set the production url
+$transaction->setTransactionStatusEndpoint('...');
+
+// Check the transaction status
+$status = $transaction->check($amount, $order_id, $reference);
+$status->pending();
+$status->fail();
+$status->success();
 ```
