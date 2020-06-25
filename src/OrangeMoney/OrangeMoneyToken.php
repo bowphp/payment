@@ -42,9 +42,9 @@ class OrangeMoneyToken
     public function __construct(string $access_token, string $token_type, int $expires_in)
     {
         $this->access_token = $access_token;
-        
+
         $this->token_type = $token_type;
-        
+
         $this->expires_in = $expires_in;
 
         $this->expires_realy_in = (time() + $expires_in) - 5;

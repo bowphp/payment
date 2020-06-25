@@ -60,9 +60,10 @@ class OrangeMoneyPayment
      *
      * @param OrangeMoneyToken $token
      * @param string $merchant_key
+     * @param string $currency
      * @return mixed
      */
-    public function __construct(OrangeMoneyToken $token, $merchant_key)
+    public function __construct(OrangeMoneyToken $token, $merchant_key, string $currency = 'OUV')
     {
         $this->token = $token;
         
@@ -70,9 +71,9 @@ class OrangeMoneyPayment
         
         $this->merchant_key = $merchant_key;
         
-        $this->currency = 'OUV';
+        $this->currency = $currency;
     }
-    
+
     /**
      * Make payment
      *
