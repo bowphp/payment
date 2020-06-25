@@ -2,6 +2,7 @@
 
 namespace Bow\Payment\OrangeMoney;
 
+use Bow\Payment\Common\PaymentToken as OrangeMoneyToken;
 use \GuzzleHttp\Client as HttpClient;
 
 class OrangeMoneyTokenGenerator

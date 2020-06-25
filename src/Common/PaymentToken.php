@@ -1,39 +1,39 @@
 <?php
 
-namespace Bow\Payment\OrangeMoney;
+namespace Bow\Payment\Common;
 
-class OrangeMoneyToken
+class PaymentToken
 {
     /**
-     * The access token value
+     * Define the access token value
      *
      * @var string
      */
     private $access_token;
     
     /**
-     * The type of token who define how to call the API
+     * Define the type of token who define how to call the API
      *
      * @var string
      */
     private $token_type;
     
     /**
-     * The token expiration time
+     * Define the token expiration time
      *
      * @var int
      */
     private $expires_in;
     
     /**
-     * The realy time for token expiration
+     * Define the realy time for token expiration
      *
      * @var int
      */
     private $expires_realy_in;
     
     /**
-     * OrangeMoneyToken constructor
+     * PaymentToken constructor
      *
      * @param string $access_token
      * @param string $token_type
@@ -42,9 +42,9 @@ class OrangeMoneyToken
     public function __construct(string $access_token, string $token_type, int $expires_in)
     {
         $this->access_token = $access_token;
-
+        
         $this->token_type = $token_type;
-
+        
         $this->expires_in = $expires_in;
 
         $this->expires_realy_in = (time() + $expires_in) - 5;

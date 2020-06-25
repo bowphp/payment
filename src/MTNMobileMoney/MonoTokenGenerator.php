@@ -2,7 +2,8 @@
 
 namespace Bow\Payment\MTMMobileMoney;
 
-use \GuzzleHttp\Client as HttpClient;
+use Bow\Payment\Common\PaymentToken as MomoToken;
+use GuzzleHttp\Client as HttpClient;
 
 class MomoEnvironment
 {

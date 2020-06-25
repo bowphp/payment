@@ -2,7 +2,7 @@
 
 use Bow\Payment\OrangeMoney\OrangeMoney;
 use Bow\Payment\OrangeMoney\OrangeMoneyPayment;
-use Bow\Payment\OrangeMoney\OrangeMoneyToken;
+use Bow\Payment\Common\PaymentToken as OrangeMoneyToken;
 use Bow\Payment\OrangeMoney\OrangeMoneyTokenGenerator;
 
 class OrangeMoneyTest extends \PHPUnit\Framework\TestCase
