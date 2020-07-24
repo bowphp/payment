@@ -7,11 +7,6 @@ use Bow\Payment\OrangeMoney\OrangeMoneyTokenGenerator;
 
 class OrangeMoneyTest extends \PHPUnit\Framework\TestCase
 {
-    public function testEnvironment()
-    {
-        
-    }
-
     public function testGetToken()
     {
         $stub = $this->createMock(OrangeMoneyTokenGenerator::class);

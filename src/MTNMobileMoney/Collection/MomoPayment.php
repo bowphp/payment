@@ -1,6 +1,6 @@
 <?php
 
-namespace Bow\Payment\MTNMobile\Money
+namespace Bow\Payment\MTNMobileMoney\Collection;
 
 class MomoPayment
 {
