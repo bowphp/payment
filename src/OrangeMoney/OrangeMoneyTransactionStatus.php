@@ -52,6 +52,26 @@ class OrangeMoneyTransactionStatus
     }
 
     /**
+     * Define if transaction initiated
+     *
+     * @return bool
+     */
+    public function initiated()
+    {
+        return $this->status == 'INITIATED';
+    }
+
+    /**
+     * Define if transaction expired
+     *
+     * @return bool
+     */
+    public function expired()
+    {
+        return $this->status == 'EXPIRED';
+    }
+
+    /**
      * Define if transaction success
      *
      * @return bool

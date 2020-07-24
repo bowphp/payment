@@ -1,39 +1,39 @@
 <?php
 
-namespace Bow\Payment\MTNMobileMoney;
+namespace Bow\Payment\Common;
 
-class MomoToken
+class PaymentToken
 {
     /**
-     * The access token value
+     * Define the access token value
      *
      * @var string
      */
     private $access_token;
     
     /**
-     * The type of token who define how to call the API
+     * Define the type of token who define how to call the API
      *
      * @var string
      */
     private $token_type;
     
     /**
-     * The token expiration time
+     * Define the token expiration time
      *
      * @var int
      */
     private $expires_in;
     
     /**
-     * The realy time for token expiration
+     * Define the realy time for token expiration
      *
      * @var int
      */
     private $expires_realy_in;
     
     /**
-     * OrangeMoneyToken constructor
+     * PaymentToken constructor
      *
      * @param string $access_token
      * @param string $token_type

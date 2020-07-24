@@ -2,6 +2,7 @@
 
 namespace Bow\Payment\OrangeMoney;
 
+use Bow\Payment\Common\PaymentToken as OrangeMoneyToken;
 use \GuzzleHttp\Client as HttpClient;
 
 class OrangeMoneyPayment
@@ -60,9 +61,10 @@ class OrangeMoneyPayment
      *
      * @param OrangeMoneyToken $token
      * @param string $merchant_key
+     * @param string $currency
      * @return mixed
      */
-    public function __construct(OrangeMoneyToken $token, $merchant_key)
+    public function __construct(OrangeMoneyToken $token, $merchant_key, string $currency = 'OUV')
     {
         $this->token = $token;
         
@@ -70,9 +72,9 @@ class OrangeMoneyPayment
         
         $this->merchant_key = $merchant_key;
         
-        $this->currency = 'OUV';
+        $this->currency = $currency;
     }
-    
+
     /**
      * Make payment
      *

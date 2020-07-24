@@ -5,11 +5,18 @@ namespace Bow\Payment\MTMMobileMoney;
 class MomoEnvironment
 {
     /**
-     * The environment flag
+     * Define the environment flag
      *
      * @var string
      */
     private $environment = 'sandbox';
+
+    /**
+     * Define the basic auth value
+     *
+     * @var string
+     */
+    private $basic_auth;
 
     /**
      * MomoEnvironment constructor
@@ -17,9 +24,10 @@ class MomoEnvironment
      * @param string $subscription_key
      * @return void
      */
-    public function __construct(string $subscription_key)
+    public function __construct(string $subscription_key. string $basic_auth)
     {
         $this->subscription_key = $subscription_key;
+        $this->basic_auth = $basic_auth;
     }
 
     /**
@@ -30,6 +38,16 @@ class MomoEnvironment
     public function getSubscriptionKey()
     {
         return $this->subscription_key;
+    }
+
+    /**
+     * Get the basic authorization key
+     *
+     * @return string
+     */
+    public function getBasicAuthorizationKey()
+    {
+        return $this->basic_auth;
     }
 
     /**
@@ -69,7 +87,7 @@ class MomoEnvironment
      */
     public function switchToProduction()
     {
-        $this->environment = 'sandbox';
+        $this->environment = 'production';
     }
 
     /**
@@ -96,7 +114,7 @@ class MomoEnvironment
     public function getAuthorzition()
     {
         return [
-            'Authorization' => 'Basic ' . base64_encode('API URI and API Key'),
+            'Authorization' => 'Basic ' . $this->basic_auth,
             'Ocp-Apim-Subscription-Key' => $this->subscription_key,
         ];
     }
