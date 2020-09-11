@@ -2,7 +2,7 @@
 
 namespace Bow\Payment;
 
-use App\Controller\Controller;
+use App\Controllers\Controller;
 use Bow\Http\Request;
 
 class PaymentNotificationController extends Controller

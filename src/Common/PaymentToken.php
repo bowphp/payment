@@ -24,13 +24,13 @@ class PaymentToken
      * @var int
      */
     private $expires_in;
-    
+
     /**
-     * Define the realy time for token expiration
+     * Define the really time for token expiration
      *
      * @var int
      */
-    private $expires_realy_in;
+    private $expires_really_in;
     
     /**
      * PaymentToken constructor
@@ -47,7 +47,7 @@ class PaymentToken
         
         $this->expires_in = $expires_in;
 
-        $this->expires_realy_in = (time() + $expires_in) - 5;
+        $this->expires_really_in = (time() + $expires_in) - 5;
     }
     
     /**
@@ -97,6 +97,6 @@ class PaymentToken
      */
     public function hasExpired()
     {
-        return $this->expires_realy_in - time() <= 0;
+        return $this->expires_really_in - time() <= 0;
     }
 }

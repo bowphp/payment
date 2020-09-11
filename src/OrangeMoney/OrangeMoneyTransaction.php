@@ -47,7 +47,7 @@ class OrangeMoneyTransaction
      * @param string $endpoint
      * @return mixed
      */
-    public function setTransactinStatusUrl($endpoint)
+    public function setTransactionStatusUrl($endpoint)
     {
         $this->endpoint = $endpoint;
     }
@@ -108,7 +108,7 @@ class OrangeMoneyTransaction
     }
 
     /**
-     * Check the payment have successed
+     * Check the payment have success
      *
      * @param string $order_id
      * @param int|double $amount

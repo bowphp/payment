@@ -2,7 +2,9 @@
 
 namespace Bow\Payment\OrangeMoney;
 
-class OrangeMoneyTransactionStatus
+use Bow\Payment\Common\TransactionStatusContract;
+
+class OrangeMoneyTransactionStatus implements TransactionStatusContract
 {
     /**
      * Define the transaction status

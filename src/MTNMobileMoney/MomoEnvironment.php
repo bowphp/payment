@@ -24,7 +24,7 @@ class MomoEnvironment
      * @param string $subscription_key
      * @return void
      */
-    public function __construct(string $subscription_key. string $basic_auth)
+    public function __construct(string $subscription_key, string $basic_auth)
     {
         $this->subscription_key = $subscription_key;
         $this->basic_auth = $basic_auth;
@@ -111,7 +111,7 @@ class MomoEnvironment
      *
      * @return array
      */
-    public function getAuthorzition()
+    public function getAuthorization()
     {
         return [
             'Authorization' => 'Basic ' . $this->basic_auth,

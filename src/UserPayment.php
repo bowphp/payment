@@ -9,7 +9,8 @@ trait UserPayment
      *
      * @return mixed
      */
-    public function payment()
+    public function payment($amount, $order_id, $reference)
     {
+        return Bowcasher::pay($amount, $order_id, $reference);
     }
 }

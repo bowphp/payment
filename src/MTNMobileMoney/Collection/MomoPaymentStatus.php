@@ -1,6 +1,6 @@
 <?php
 
-namespace Bow\Payment\MTNMobileMoney\Collection
+namespace Bow\Payment\MTNMobileMoney\Collection;
 
 class MomoPaymentStatus
 {

@@ -3,9 +3,10 @@
 namespace Bow\Payment\OrangeMoney;
 
 use Bow\Payment\Common\PaymentToken as OrangeMoneyToken;
+use Bow\Payment\Common\TokenGeneratorContract;
 use \GuzzleHttp\Client as HttpClient;
 
-class OrangeMoneyTokenGenerator
+class OrangeMoneyTokenGenerator implements TokenGeneratorContract
 {
     /**
      * HTTP client instance
@@ -29,7 +30,7 @@ class OrangeMoneyTokenGenerator
     private $key;
     
     /**
-     * OrangeMoney contructor
+     * OrangeMoney constructor
      *
      * @param string $key
      * @return mixed
@@ -96,7 +97,7 @@ class OrangeMoneyTokenGenerator
      * @param string $key
      * @return mixed
      */
-    public function setClientKey($key)
+    public function setCredentials($key)
     {
         $this->key = $key;
     }

@@ -50,14 +50,14 @@ class OrangeMoneyPayment
     private $notif_url;
     
     /**
-     * The merchand id
+     * The merchant id
      *
      * @var string
      */
     private $merchant_key;
     
     /**
-     * OrangeMoney contructor
+     * OrangeMoney constructor
      *
      * @param OrangeMoneyToken $token
      * @param string $merchant_key
@@ -166,12 +166,12 @@ class OrangeMoneyPayment
     }
 
     /**
-     * Set the merchand id
+     * Set the merchant id
      *
      * @param string $merchant_key
      * @return mixed
      */
-    public function setMerchandId(string $merchant_key)
+    public function setMerchantId(string $merchant_key)
     {
         $this->merchant_key = $merchant_key;
     }
