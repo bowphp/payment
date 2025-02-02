@@ -5,6 +5,7 @@ namespace Bow\Payment\Common;
 abstract class PaymentManagerContract
 {
     const PRODUCTION = 'production';
+
     const DEVELOPMENT = 'development';
 
     /**
@@ -33,7 +34,7 @@ abstract class PaymentManagerContract
      *
      * @return string
      */
-    public function switchToProduction()
+    public function switchToProduction(): void
     {
         $this->environment = PaymentManagerContract::PRODUCTION;
     }
@@ -43,7 +44,7 @@ abstract class PaymentManagerContract
      *
      * @return string
      */
-    public function switchToDevelopment()
+    public function switchToDevelopment(): void
     {
         $this->environment = PaymentManagerContract::DEVELOPMENT;
     }
@@ -54,7 +55,7 @@ abstract class PaymentManagerContract
      * @param string $environment
      * @return string
      */
-    public function getEnvironment()
+    public function getEnvironment(): string
     {
         return $this->environment;
     }

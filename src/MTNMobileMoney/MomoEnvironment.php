@@ -12,22 +12,15 @@ class MomoEnvironment
     private $environment = 'sandbox';
 
     /**
-     * Define the basic auth value
-     *
-     * @var string
-     */
-    private $basic_auth;
-
-    /**
      * MomoEnvironment constructor
      *
      * @param string $subscription_key
      * @return void
      */
-    public function __construct(string $subscription_key, string $basic_auth)
-    {
-        $this->subscription_key = $subscription_key;
-        $this->basic_auth = $basic_auth;
+    public function __construct(
+        private string $subscription_key,
+        private string $basic_auth
+    ) {
     }
 
     /**
@@ -55,9 +48,9 @@ class MomoEnvironment
      *
      * @return bool
      */
-    public function production()
+    public function production(): bool
     {
-        return $this->environment = 'production';
+        return $this->environment == 'production';
     }
 
     /**
@@ -65,7 +58,7 @@ class MomoEnvironment
      *
      * @return bool
      */
-    public function sandbox()
+    public function sandbox(): bool
     {
         return $this->environment == 'sandbox';
     }
@@ -95,7 +88,7 @@ class MomoEnvironment
      *
      * @return string
      */
-    public function getBaseUri()
+    public function getBaseUri(): string
     {
         if ($this->sandbox()) {
             $base_uri = 'https://sandbox.momodeveloper.mtn.com/v1_0/';
@@ -111,7 +104,7 @@ class MomoEnvironment
      *
      * @return array
      */
-    public function getAuthorization()
+    public function getAuthorization(): array
     {
         return [
             'Authorization' => 'Basic ' . $this->basic_auth,

@@ -56,7 +56,7 @@ class BowcasherOrangeMoneyService extends PaymentManagerContract
         $orange = $payment->prepare($amount, $order_id, $reference);
         $payment_information = $orange->getPaymentInformation();
 
-         // Redirect to payment plateforme
+        // Redirect to payment plateforme
         $orange->pay();
     }
 

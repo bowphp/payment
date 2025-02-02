@@ -22,13 +22,6 @@ class OrangeMoneyPayment
     private $pay_url = '/orange-money-webpay/dev/v1/webpayment';
     
     /**
-     * The generate orange money token
-     *
-     * @var OrangeMoneyToken
-     */
-    private $token;
-    
-    /**
      * The return url
      *
      * @var string
@@ -50,13 +43,6 @@ class OrangeMoneyPayment
     private $notif_url;
     
     /**
-     * The merchant id
-     *
-     * @var string
-     */
-    private $merchant_key;
-    
-    /**
      * OrangeMoney constructor
      *
      * @param OrangeMoneyToken $token
@@ -64,15 +50,9 @@ class OrangeMoneyPayment
      * @param string $currency
      * @return mixed
      */
-    public function __construct(OrangeMoneyToken $token, $merchant_key, string $currency = 'OUV')
+    public function __construct(private OrangeMoneyToken $token, private string $merchant_key, private string $currency = 'OUV')
     {
-        $this->token = $token;
-        
         $this->http = new HttpClient(['base_uri' => 'https://api.orange.com']);
-        
-        $this->merchant_key = $merchant_key;
-        
-        $this->currency = $currency;
     }
 
     /**

@@ -11,15 +11,13 @@ class OrangeMoney
      * @param string $pay_token
      * @param string $notif_token
      */
-    public function __construct($payment_url, $pay_token, $notif_token)
-    {
-        $this->pay_token = $pay_token;
-        
-        $this->payment_url = $payment_url;
-        
-        $this->notif_token = $notif_token;
+    public function __construct(
+        private $payment_url,
+        private $pay_token,
+        private $notif_token
+    ) {
     }
-    
+
     /**
      * Redirect client to make payment
      *
@@ -44,7 +42,7 @@ class OrangeMoney
             "notif_token" => $this->notif_token
         ];
     }
-    
+
     /**
      * __toString
      *
