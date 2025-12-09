@@ -1,9 +1,9 @@
 <?php
 
-namespace Bow\Payment\OrangeMoney;
+namespace Bow\Payment\IvoryCost\OrangeMoney;
 
-use Bow\Payment\Common\PaymentToken as OrangeMoneyToken;
 use \GuzzleHttp\Client as HttpClient;
+use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyToken;
 
 class OrangeMoneyPayment
 {
@@ -20,13 +20,6 @@ class OrangeMoneyPayment
      * @var string
      */
     private $pay_url = '/orange-money-webpay/dev/v1/webpayment';
-    
-    /**
-     * The generate orange money token
-     *
-     * @var OrangeMoneyToken
-     */
-    private $token;
     
     /**
      * The return url
@@ -50,13 +43,6 @@ class OrangeMoneyPayment
     private $notif_url;
     
     /**
-     * The merchant id
-     *
-     * @var string
-     */
-    private $merchant_key;
-    
-    /**
      * OrangeMoney constructor
      *
      * @param OrangeMoneyToken $token
@@ -64,29 +50,22 @@ class OrangeMoneyPayment
      * @param string $currency
      * @return mixed
      */
-    public function __construct(OrangeMoneyToken $token, $merchant_key, string $currency = 'OUV')
+    public function __construct(private OrangeMoneyToken $token, private string $merchant_key, private string $currency = 'OUV')
     {
-        $this->token = $token;
-        
         $this->http = new HttpClient(['base_uri' => 'https://api.orange.com']);
-        
-        $this->merchant_key = $merchant_key;
-        
-        $this->currency = $currency;
     }
 
     /**
      * Make payment
      *
      * @param int|double $amount
-     * @param string $order_id
      * @param string $reference
      * @return OrangeMoney
      */
-    public function prepare($amount, string $order_id, string $reference)
+    public function prepare($amount, string $reference)
     {
         $response = $this->http->post($this->pay_url, [
-            'json' => $this->buildRequestData($amount, $reference, $order_id),
+            'json' => $this->buildRequestData($amount, $reference),
             'headers' => [
                 'Authorization' => (string) $this->token,
                 'Accept' => 'application/json',
@@ -97,7 +76,7 @@ class OrangeMoneyPayment
         // Parse Json data
         $data = json_decode($response->getBody()->getContents(), true);
 
-        return new OrangeMoney(
+        return new OrangeMoneyResponse(
             $data['payment_url'],
             $data['pay_token'],
             $data['notif_token']
@@ -181,16 +160,15 @@ class OrangeMoneyPayment
      *
      * @param int|double $amount
      * @param string $reference
-     * @param string $order_id
      * @return array
      */
-    protected function buildRequestData($amount, string $reference, string $order_id)
+    protected function buildRequestData($amount, string $reference)
     {
         return [
             "merchant_key" => $this->merchant_key,
             "currency" => $this->currency,
-            "order_id" => $order_id,
             "amount" => $amount,
+            'order_id' => $reference,
             "return_url" => $this->return_url,
             "cancel_url" => $this->cancel_url,
             "notif_url" => $this->notif_url,

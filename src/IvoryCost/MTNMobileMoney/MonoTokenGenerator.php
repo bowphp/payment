@@ -15,32 +15,14 @@ class MomoEnvironment
     private $http;
 
     /**
-     * The environment system
-     *
-     * @var MomoEnvironment
-     */
-    private $environment;
-
-    /**
-     * The name of payment action interface
-     *
-     * @var string
-     */
-    private $interface_name;
-
-    /**
      * MomoEnvironment constructor
      *
      * @param MomoEnvironment $environment
      * @return mixed
      */
-    public function __construct(MomoEnvironment $environment, $interface_name = 'collection')
+    public function __construct(private MomoEnvironment $environment, private string $interface_name = 'collection')
     {
-        $this->environment = $environment;
-
         $this->http = new HttpClient(['base_uri' => $this->environment->getBaseUri()]);
-
-        $this->interface_name = $interface_name;
     }
 
     /**

@@ -1,9 +1,9 @@
 <?php
 
-namespace Bow\Payment\OrangeMoney;
+namespace Bow\Payment\IvoryCost\OrangeMoney;
 
-use Bow\Payment\Common\PaymentToken as OrangeMoneyToken;
 use \GuzzleHttp\Client as HttpClient;
+use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyToken;
 
 class OrangeMoneyTransaction
 {
@@ -55,8 +55,8 @@ class OrangeMoneyTransaction
     /**
      * Check the payment status
      *
-     * @param string $order_id
      * @param int|double $amount
+     * @param string $order_id
      * @param string $pay_token
      */
     public function check($amount, string $order_id, string $pay_token)
@@ -90,7 +90,7 @@ class OrangeMoneyTransaction
     {
         $status = $this->check($amount, $order_id, $pay_token);
 
-        return $status->fail();
+        return $status->isFail();
     }
 
     /**
@@ -104,7 +104,7 @@ class OrangeMoneyTransaction
     {
         $status = $this->check($amount, $order_id, $pay_token);
 
-        return $status->pending();
+        return $status->isPending();
     }
 
     /**
@@ -118,7 +118,7 @@ class OrangeMoneyTransaction
     {
         $status = $this->check($amount, $order_id, $pay_token);
 
-        return $status->success();
+        return $status->isSuccess();
     }
 
     /**

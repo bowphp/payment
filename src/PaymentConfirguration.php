@@ -5,14 +5,14 @@ namespace Bow\Payment;
 use Bow\Configuration\Configuration;
 use Bow\Configuration\Loader as Config;
 
-class BowcasherConfiguration extends Configuration
+class PaymentConfiguration extends Configuration
 {
     /**
      * Create payment configuration
      *
      * @param Config $config
      */
-    public function create(Config $config)
+    public function create(Config $config): void
     {
         $payment = require __DIR__.'/../config/payment';
 
@@ -21,7 +21,7 @@ class BowcasherConfiguration extends Configuration
         $config['payment'] = $payment;
 
         $this->container->make('payment', function ($config) {
-            return Bowcasher::configure($config['payment']);
+            return Payment::configure($config['payment']);
         });
     }
 
@@ -30,8 +30,8 @@ class BowcasherConfiguration extends Configuration
      *
      * @return mixed
      */
-    public function run()
+    public function run(): void
     {
-        return $this->container->make('payment');
+        $this->container->make('payment');
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Bow\Payment\Common;
+namespace Bow\Payment\IvoryCost\OrangeMoney;
 
-class PaymentToken
+class OrangeMoneyToken
 {
     /**
      * Define the access token value
@@ -31,7 +31,7 @@ class PaymentToken
      * @var int
      */
     private $expires_really_in;
-    
+
     /**
      * PaymentToken constructor
      *
@@ -55,7 +55,7 @@ class PaymentToken
      *
      * @var string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->token_type . ' ' . $this->access_token;
     }
@@ -65,7 +65,7 @@ class PaymentToken
      *
      * @return string
      */
-    public function getAccessToken()
+    public function getAccessToken(): string
     {
         return $this->access_token;
     }
@@ -75,7 +75,7 @@ class PaymentToken
      *
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->token_type;
     }
@@ -85,7 +85,7 @@ class PaymentToken
      *
      * @return int
      */
-    public function getExpiresIn()
+    public function getExpiresIn(): int
     {
         return $this->expires_in;
     }
@@ -95,7 +95,7 @@ class PaymentToken
      *
      * @return string
      */
-    public function hasExpired()
+    public function hasExpired(): bool
     {
         return $this->expires_really_in - time() <= 0;
     }
