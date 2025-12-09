@@ -1,5 +1,7 @@
 <?php
 
+use Bow\Payment\Payment;
+
 return [
     /**
      * Define the model used my gateway
@@ -9,25 +11,43 @@ return [
     /**
      * The default gateway
      */
-    'default' => 'orange_ci',
+    'default' => [
+        'gateway' => Payment::ORANGE,
+        'country' => 'ci',
+    ],
 
     /**
      * List of available gateway
      */
-    'gateways' => [
-        'orange_ci' => [
+    'ivoiry_cost' => [
+        'orange' => [
             'client_key' => '',
-            'merchant_key' => ''
+            'client_secret' => '',
+            'webhook_secret' => ''
         ],
 
-        'mtn_ci' => [
+        'mtn' => [
             'client_key' => '',
-            'merchant_key' => ''
+            'client_secret' => '',
+            'webhook_secret' => ''
         ],
 
-        'moov_ci' => [
+        'moov' => [
             'client_key' => '',
-            'merchant_key' => ''
+            'client_secret' => '',
+            'webhook_secret' => ''
+        ],
+
+        'wave' => [
+            'client_key' => '',
+            'client_secret' => '',
+            'webhook_secret' => ''
+        ],
+
+        'djamo' => [
+            'client_key' => '',
+            'client_secret' => '',
+            'webhook_secret' => ''
         ]
-    ]
+    ],
 ];

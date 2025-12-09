@@ -1,29 +1,22 @@
 <?php
 
-use Bow\Payment\Common\PaymentManagerContract;
-use Bow\Payment\Common\TransactionStatusContract;
-use Bow\Payment\OrangeMoney\OrangeMoneyPayment;
-use Bow\Payment\OrangeMoney\OrangeMoneyTokenGenerator;
-use Bow\Payment\OrangeMoney\OrangeMoneyTransaction;
+namespace Bow\Payment\IvoryCost\OrangeMoney;
 
-class BowcasherOrangeMoneyService extends PaymentManagerContract
+use Bow\Payment\Common\ProcessorGatewayInterface;
+use Bow\Payment\Common\ProcessorTransactionStatusInterface;
+use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyPayment;
+use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyTokenGenerator;
+use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyTransaction;
+
+class OrangeMoneyGateway extends ProcessorGatewayInterface
 {
     /**
-     * Define the configuration
-     *
-     * @var string
-     */
-    private $config;
-    
-    /**
-     * BowcasherForOrangeMoney constructor
+     * ForOrangeMoney constructor
      *
      * @param array $config
-     * @return mixed
      */
-    public function __construct(array $config)
+    public function __construct(private array $config)
     {
-        $this->config = $config;
     }
 
     /**
@@ -31,29 +24,27 @@ class BowcasherOrangeMoneyService extends PaymentManagerContract
     *
     * @return void
     */
-    public function pay(...$args)
+    public function payment(...$args)
     {
         $token_generator = $this->getTokenGenerator();
 
         $payment = new OrangeMoneyPayment(
             $token_generator->getToken(), 
-            $this->config['merchant_key']
+            $this->config['client_secret'],
         );
         
         // Set the right production endpoint
-        if ($this->getEnvironment() == PaymentManagerContract::PRODUCTION) {
-            $payment->setPaymentEndpoint('/orange-money-webpay/v1/webpayment');
-        }
+        $payment->setPaymentEndpoint('/orange-money-webpay/v1/webpayment');
 
         $payment->setNotifyUrl($args['notif_url']);
         $payment->setCancelUrl($args['cancel_url']);
         $payment->setReturnUrl($args['return_url']);
 
         $amount = $args['amount'];
-        $order_id = $args['order_id'];
         $reference = $args['reference'];
 
-        $orange = $payment->prepare($amount, $order_id, $reference);
+        $orange = $payment->prepare($amount, $reference);
+
         $payment_information = $orange->getPaymentInformation();
 
         // Redirect to payment plateforme
@@ -64,25 +55,24 @@ class BowcasherOrangeMoneyService extends PaymentManagerContract
      * Verify payment
      *
      * @param array ...$args
-     * @return TransactionStatusContract
+     * @return ProcessorTransactionStatusInterface
      */
     public function verify(...$args)
     {
         $token_generator = $this->getTokenGenerator();
+
         // Transaction status
         $transaction = new OrangeMoneyTransaction($token_generator->getToken());
 
         // Set the production url
-        if ($this->getEnvironment() == PaymentManagerContract::PRODUCTION) {
-            $transaction->setTransactionStatusEndpoint('/orange-money-webpay/v1/transactionstatus');
-        }
+        $transaction->setTransactionStatusEndpoint('/orange-money-webpay/v1/transactionstatus');
 
         $amount = $args['amount'];
         $order_id = $args['order_id'];
-        $reference = $args['reference'];
+        $pay_token = $args['pay_token'];
 
         // Check the transaction status
-        return $transaction->check($amount, $order_id, $reference);
+        return $transaction->check($amount, $order_id, $pay_token);
     }
 
     /**
@@ -95,11 +85,8 @@ class BowcasherOrangeMoneyService extends PaymentManagerContract
         $token_generator = new OrangeMoneyTokenGenerator($this->config['client_key']);
 
         // Set the right production endpoint
-        if ($this->getEnvironment() == PaymentManagerContract::PRODUCTION) {
-            $token_generator->setTokenGeneratorEndpoint('/oauth/v2/token');
-        }
+        $token_generator->setTokenGeneratorEndpoint('/oauth/v2/token');
 
         return $token_generator;
     }
 }
-    

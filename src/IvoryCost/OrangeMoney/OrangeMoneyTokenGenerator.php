@@ -1,12 +1,11 @@
 <?php
 
-namespace Bow\Payment\OrangeMoney;
+namespace Bow\Payment\IvoryCost\OrangeMoney;
 
-use Bow\Payment\Common\PaymentToken as OrangeMoneyToken;
-use Bow\Payment\Common\TokenGeneratorContract;
 use \GuzzleHttp\Client as HttpClient;
+use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyToken;
 
-class OrangeMoneyTokenGenerator implements TokenGeneratorContract
+class OrangeMoneyTokenGenerator
 {
     /**
      * HTTP client instance
@@ -60,7 +59,7 @@ class OrangeMoneyTokenGenerator implements TokenGeneratorContract
         $content = $response->getBody()->getContents();
         
         $token = json_decode($content);
-        
+
         return new OrangeMoneyToken(
             $token->access_token,
             $token->token_type,

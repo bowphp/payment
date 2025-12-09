@@ -1,8 +1,8 @@
 <?php
 
-namespace Bow\Payment\OrangeMoney;
+namespace Bow\Payment\IvoryCost\OrangeMoney;
 
-class OrangeMoney
+class OrangeMoneyResponse
 {
     /**
      * OrangeMoneyPaymentStatus constructor
@@ -12,9 +12,9 @@ class OrangeMoney
      * @param string $notif_token
      */
     public function __construct(
-        private $payment_url,
-        private $pay_token,
-        private $notif_token
+        private ?string $payment_url,
+        private ?string $pay_token,
+        private ?string $notif_token
     ) {
     }
 

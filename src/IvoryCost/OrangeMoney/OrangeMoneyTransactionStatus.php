@@ -1,10 +1,10 @@
 <?php
 
-namespace Bow\Payment\OrangeMoney;
+namespace Bow\Payment\IvoryCost\OrangeMoney;
 
-use Bow\Payment\Common\TransactionStatusContract;
+use Bow\Payment\Common\ProcessorTransactionStatusInterface;
 
-class OrangeMoneyTransactionStatus implements TransactionStatusContract
+class OrangeMoneyTransactionStatus implements ProcessorTransactionStatusInterface
 {
     /**
      * Define the transaction status
@@ -34,21 +34,11 @@ class OrangeMoneyTransactionStatus implements TransactionStatusContract
     }
 
     /**
-     * Get the notification token
-     *
-     * @return string
-     */
-    public function getNotificationToken()
-    {
-        return $this->notif_token;
-    }
-
-    /**
      * Define if transaction fail
      *
      * @return bool
      */
-    public function fail()
+    public function isFail()
     {
         return $this->status == 'FAIL';
     }
@@ -58,7 +48,7 @@ class OrangeMoneyTransactionStatus implements TransactionStatusContract
      *
      * @return bool
      */
-    public function initiated()
+    public function isInitiated()
     {
         return $this->status == 'INITIATED';
     }
@@ -68,7 +58,7 @@ class OrangeMoneyTransactionStatus implements TransactionStatusContract
      *
      * @return bool
      */
-    public function expired()
+    public function isExpired()
     {
         return $this->status == 'EXPIRED';
     }
@@ -78,7 +68,7 @@ class OrangeMoneyTransactionStatus implements TransactionStatusContract
      *
      * @return bool
      */
-    public function success()
+    public function isSuccess()
     {
         return $this->status == 'SUCCESS';
     }
@@ -88,7 +78,7 @@ class OrangeMoneyTransactionStatus implements TransactionStatusContract
      *
      * @return bool
      */
-    public function pending()
+    public function isPending()
     {
         return $this->status == 'PENDING';
     }

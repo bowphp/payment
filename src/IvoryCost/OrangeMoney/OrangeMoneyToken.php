@@ -1,8 +1,8 @@
 <?php
 
-namespace Bow\Payment\Common;
+namespace Bow\Payment\IvoryCost\OrangeMoney;
 
-class PaymentToken
+class OrangeMoneyToken
 {
     /**
      * Define the access token value
@@ -31,7 +31,7 @@ class PaymentToken
      * @var int
      */
     private $expires_really_in;
-    
+
     /**
      * PaymentToken constructor
      *
