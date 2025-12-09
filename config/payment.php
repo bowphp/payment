@@ -19,7 +19,7 @@ return [
     /**
      * List of available gateway
      */
-    'ivoiry_cost' => [
+    'ivory_coast' => [
         'orange' => [
             'client_key' => '',
             'client_secret' => '',
@@ -27,8 +27,10 @@ return [
         ],
 
         'mtn' => [
-            'client_key' => '',
-            'client_secret' => '',
+            'subscription_key' => '',
+            'api_user' => '',
+            'api_key' => '',
+            'environment' => 'sandbox', // or 'production'
             'webhook_secret' => ''
         ],
 

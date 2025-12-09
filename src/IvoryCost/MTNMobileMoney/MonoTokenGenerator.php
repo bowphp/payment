@@ -1,11 +1,13 @@
 <?php
 
-namespace Bow\Payment\MTMMobileMoney;
+namespace Bow\Payment\IvoryCost\MTNMobileMoney;
 
-use Bow\Payment\Common\PaymentToken as MomoToken;
 use GuzzleHttp\Client as HttpClient;
+use Bow\Payment\IvoryCost\MTNMobileMoney\MomoToken;
+use Bow\Payment\IvoryCost\MTNMobileMoney\MomoEnvironment;
+use Bow\Payment\Exceptions\TokenGenerationException;
 
-class MomoEnvironment
+class MomoTokenGenerator
 {
     /**
      * HTTP client instance
@@ -15,48 +17,66 @@ class MomoEnvironment
     private $http;
 
     /**
-     * MomoEnvironment constructor
+     * Environment instance
+     *
+     * @var MomoEnvironment
+     */
+    private $environment;
+
+    /**
+     * Interface name (collection, disbursement, remittance)
+     *
+     * @var string
+     */
+    private $interface = 'collection';
+
+    /**
+     * MomoTokenGenerator constructor
      *
      * @param MomoEnvironment $environment
-     * @return mixed
+     * @param string $interface
      */
-    public function __construct(private MomoEnvironment $environment, private string $interface_name = 'collection')
+    public function __construct(MomoEnvironment $environment, string $interface = 'collection')
     {
+        $this->environment = $environment;
+        $this->interface = $interface;
         $this->http = new HttpClient(['base_uri' => $this->environment->getBaseUri()]);
     }
 
     /**
-     * Get the token
+     * Get authentication token
      *
-     * @return string
+     * @return MomoToken
+     * @throws TokenGenerationException
      */
-    public function getToken()
+    public function getToken(): MomoToken
     {
-        $headers = $this->environment->getAuthorization();
+        try {
+            $response = $this->http->post("/{$this->interface}/token/", [
+                'headers' => $this->environment->getAuthorization()
+            ]);
 
-        $response = $this->http->post('/'.$this->interface_name.'/token', [
-            'headers' => $headers
-        ]);
-        
-        // Get the response content
-        $content = $response->getBody()->getContents();
-        
-        $token = json_decode($content);
+            $content = $response->getBody()->getContents();
+            $data = json_decode($content, true);
 
-        return new MomoToken(
-            $token->access_token,
-            $token->token_type,
-            $token->expires_in
-        );
+            return new MomoToken(
+                $data['access_token'],
+                $data['token_type'],
+                $data['expires_in']
+            );
+        } catch (\Exception $e) {
+            throw new TokenGenerationException('MTN Mobile Money', $e);
+        }
     }
 
     /**
-     * Set the interface type nane
+     * Set the interface name
      *
-     * @param string $name
+     * @param string $interface
+     * @return void
      */
-    public function setInterfaceName($name)
+    public function setInterface(string $interface): void
     {
-        $this->interface_name = $name;
+        $this->interface = $interface;
     }
 }

@@ -4,11 +4,12 @@ namespace Bow\Payment\IvoryCost\OrangeMoney;
 
 use Bow\Payment\Common\ProcessorGatewayInterface;
 use Bow\Payment\Common\ProcessorTransactionStatusInterface;
+use Bow\Payment\Exceptions\PaymentRequestException;
 use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyPayment;
 use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyTokenGenerator;
 use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyTransaction;
 
-class OrangeMoneyGateway extends ProcessorGatewayInterface
+class OrangeMoneyGateway implements ProcessorGatewayInterface
 {
     /**
      * ForOrangeMoney constructor
@@ -55,7 +56,7 @@ class OrangeMoneyGateway extends ProcessorGatewayInterface
      * Verify payment
      *
      * @param array ...$args
-     * @return ProcessorTransactionStatusInterface
+     * @return ProcessorStatusInterface
      */
     public function verify(...$args)
     {
@@ -73,6 +74,20 @@ class OrangeMoneyGateway extends ProcessorGatewayInterface
 
         // Check the transaction status
         return $transaction->check($amount, $order_id, $pay_token);
+    }
+
+    public function transfer(...$args)
+    {
+        throw new PaymentRequestException(
+            'Orange Money payment gateway is not yet implemented. Implementation pending official API documentation.'
+        );
+    }
+
+    public function balance(...$args)
+    {
+        throw new PaymentRequestException(
+            'Orange Money balance inquiry is not yet implemented.'
+        );
     }
 
     /**

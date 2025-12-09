@@ -2,9 +2,9 @@
 
 namespace Bow\Payment\IvoryCost\OrangeMoney;
 
-use Bow\Payment\Common\ProcessorTransactionStatusInterface;
+use Bow\Payment\Common\ProcessorStatusInterface;
 
-class OrangeMoneyTransactionStatus implements ProcessorTransactionStatusInterface
+class OrangeMoneyTransactionStatus implements ProcessorStatusInterface
 {
     /**
      * Define the transaction status
@@ -14,23 +14,14 @@ class OrangeMoneyTransactionStatus implements ProcessorTransactionStatusInterfac
     private $status;
 
     /**
-     * Define the transaction notif_token
-     *
-     * @var string
-     */
-    private $notif_token;
-
-    /**
      * OrangeMoneyTransactionStatus constructor
      *
      * @param string $status
-     * @param string $notif_token
      * @return void
      */
-    public function __construct(string $status, string $notif_token)
+    public function __construct(string $status)
     {
         $this->status = strtoupper($status);
-        $this->notif_token = $notif_token;
     }
 
     /**
