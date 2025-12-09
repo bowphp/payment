@@ -286,14 +286,7 @@ Payment::payment($data);
 - ✅ Rate limiting protection
 - ✅ Transaction audit logging
 - ✅ Comprehensive exception handling
-- ✅ Sandbox and production environment supportAPI
-- ✅ Multiple payment provider support
-- ✅ Dynamic provider switching
-- ✅ Transaction status verification
-- ✅ User model integration
-- ✅ Webhook handling
-- ✅ Transfer support
-- ✅ Balance inquiry
+- ✅ Sandbox and production environment support
 
 ## Requirements
 
@@ -329,19 +322,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Changelog
 
-See [UPGRADE_SUMMARY.md](UPGRADE_SUMMARY.md) for recent changes and improvements.res
-- `RateLimitException` - API rate limit exceeded
-- `ConfigurationException` - Configuration errors
-
-## Testing
-
-```bash
-composer test
-```
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+See [UPGRADE_SUMMARY.md](UPGRADE_SUMMARY.md) for recent changes and improvements.
 
 ## License
 
