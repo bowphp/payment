@@ -76,6 +76,12 @@ class OrangeMoneyGateway implements ProcessorGatewayInterface
         return $transaction->check($amount, $order_id, $pay_token);
     }
 
+    /**
+     * Transfer money
+     *
+     * @param array ...$args
+     * @return mixed
+     */
     public function transfer(...$args)
     {
         throw new PaymentRequestException(
@@ -83,6 +89,12 @@ class OrangeMoneyGateway implements ProcessorGatewayInterface
         );
     }
 
+    /**
+     * Get balance
+     *
+     * @param array ...$args
+     * @return mixed
+     */
     public function balance(...$args)
     {
         throw new PaymentRequestException(
