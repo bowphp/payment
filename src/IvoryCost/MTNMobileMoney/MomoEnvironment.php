@@ -1,6 +1,6 @@
 <?php
 
-namespace Bow\Payment\MTMMobileMoney;
+namespace Bow\Payment\IvoryCost\MTNMobileMoney;
 
 class MomoEnvironment
 {
@@ -12,55 +12,104 @@ class MomoEnvironment
     private $environment = 'sandbox';
 
     /**
+     * Subscription key
+     *
+     * @var string
+     */
+    private $subscription_key;
+
+    /**
+     * API User ID
+     *
+     * @var string
+     */
+    private $api_user;
+
+    /**
+     * API Key
+     *
+     * @var string
+     */
+    private $api_key;
+
+    /**
      * MomoEnvironment constructor
      *
      * @param string $subscription_key
-     * @return void
+     * @param string $api_user
+     * @param string $api_key
      */
     public function __construct(
-        private string $subscription_key,
-        private string $basic_auth
+        string $subscription_key,
+        string $api_user,
+        string $api_key
     ) {
+        $this->subscription_key = $subscription_key;
+        $this->api_user = $api_user;
+        $this->api_key = $api_key;
     }
 
     /**
-     * Get the subscription
+     * Get the subscription key
      *
      * @return string
      */
-    public function getSubscriptionKey()
+    public function getSubscriptionKey(): string
     {
         return $this->subscription_key;
     }
 
     /**
-     * Get the basic authorization key
+     * Get the API user
      *
      * @return string
      */
-    public function getBasicAuthorizationKey()
+    public function getApiUser(): string
     {
-        return $this->basic_auth;
+        return $this->api_user;
     }
 
     /**
-     * Check the environment
+     * Get the API key
      *
-     * @return bool
+     * @return string
      */
-    public function production(): bool
+    public function getApiKey(): string
     {
-        return $this->environment == 'production';
+        return $this->api_key;
     }
 
     /**
-     * Check the environment
+     * Get authorization headers
+     *
+     * @return array
+     */
+    public function getAuthorization(): array
+    {
+        return [
+            'Authorization' => 'Basic ' . base64_encode($this->api_user . ':' . $this->api_key),
+            'Ocp-Apim-Subscription-Key' => $this->subscription_key,
+        ];
+    }
+
+    /**
+     * Check if environment is production
      *
      * @return bool
      */
-    public function sandbox(): bool
+    public function isProduction(): bool
     {
-        return $this->environment == 'sandbox';
+        return $this->environment === 'production';
+    }
+
+    /**
+     * Check if environment is sandbox
+     *
+     * @return bool
+     */
+    public function isSandbox(): bool
+    {
+        return $this->environment === 'sandbox';
     }
 
     /**
@@ -68,7 +117,7 @@ class MomoEnvironment
      *
      * @return void
      */
-    public function switchToSandbox()
+    public function switchToSandbox(): void
     {
         $this->environment = 'sandbox';
     }
@@ -78,37 +127,20 @@ class MomoEnvironment
      *
      * @return void
      */
-    public function switchToProduction()
+    public function switchToProduction(): void
     {
         $this->environment = 'production';
     }
 
     /**
-     * Get the base uri
+     * Get the base URI
      *
      * @return string
      */
     public function getBaseUri(): string
     {
-        if ($this->sandbox()) {
-            $base_uri = 'https://sandbox.momodeveloper.mtn.com/v1_0/';
-        } else {
-            $base_uri = 'https://momodeveloper.mtn.com/v1_0/';
-        }
-
-        return $base_uri;
-    }
-
-    /**
-     * Get the request Authorization
-     *
-     * @return array
-     */
-    public function getAuthorization(): array
-    {
-        return [
-            'Authorization' => 'Basic ' . $this->basic_auth,
-            'Ocp-Apim-Subscription-Key' => $this->subscription_key,
-        ];
+        return $this->isSandbox()
+            ? 'https://sandbox.momodeveloper.mtn.com'
+            : 'https://momodeveloper.mtn.com';
     }
 }

@@ -40,7 +40,7 @@ class Payment implements ProcessorGatewayInterface
      * Ivory Coast (Côte d'Ivoire) country identifier
      * ISO 3166-1 alpha-2 country code for Ivory Coast
      */
-    public const CI = 'ivoiry_cost';
+    public const CI = 'ivory_coast';
 
     /**
      * Ivory Coast payment provider mapping
@@ -51,10 +51,10 @@ class Payment implements ProcessorGatewayInterface
      */
     public const CI_PROVIDER = [
         Payment::ORANGE => \Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyGateway::class,
-        Payment::MOOV => null,
-        Payment::WAVE => null,
-        Payment::MTN => null,
-        Payment::DJAMO => null,
+        Payment::MTN => \Bow\Payment\IvoryCost\MTNMobileMoney\MTNMobileMoneyGateway::class,
+        Payment::MOOV => \Bow\Payment\IvoryCost\MoovFlooz\MoovFloozGateway::class,
+        Payment::WAVE => \Bow\Payment\IvoryCost\Wave\WaveGateway::class,
+        Payment::DJAMO => \Bow\Payment\IvoryCost\Djamo\DjamoGateway::class,
     ];
 
     /**
@@ -101,7 +101,7 @@ class Payment implements ProcessorGatewayInterface
                 if ($provider === null) {
                     throw new \InvalidArgumentException("The payment gateway [{$provider}] is not supported in country [{$country}].");
                 }
-                $config = $this->resolveConfig('ivoiry_cost', $provider);
+                $config = $this->resolveConfig('ivory_coast', $provider);
                 static::$providerGateway = new $provider($config);
                 break;
             // Other gateways can be added here

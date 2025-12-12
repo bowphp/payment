@@ -2,7 +2,7 @@
 
 namespace Bow\Payment\Common;
 
-interface ProcessorTransactionStatusInterface
+interface ProcessorStatusInterface
 {
     /**
      * Define if transaction fail

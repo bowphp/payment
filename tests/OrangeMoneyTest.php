@@ -1,9 +1,8 @@
 <?php
 
-use Bow\Payment\OrangeMoney\OrangeMoney;
-use Bow\Payment\OrangeMoney\OrangeMoneyPayment;
-use Bow\Payment\Common\PaymentToken as OrangeMoneyToken;
-use Bow\Payment\OrangeMoney\OrangeMoneyTokenGenerator;
+use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyPayment;
+use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyToken;
+use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyTokenGenerator;
 
 class OrangeMoneyTest extends \PHPUnit\Framework\TestCase
 {
@@ -26,15 +25,15 @@ class OrangeMoneyTest extends \PHPUnit\Framework\TestCase
             ->setConstructorArgs([$token, 123456])
             ->setMethods(['prepare'])->getMock();
 
-        $payment_status = $this->createMock(OrangeMoney::class);
+        $payment_status = $this->createMock(OrangeMoneyPayment::class);
         $payment->method('prepare')->willReturn($payment_status);
 
-        $this->assertInstanceOf(OrangeMoney::class, $payment->prepare(500, 'reference', 1));
+        $this->assertInstanceOf(OrangeMoneyPayment::class, $payment->prepare(500, 'reference', 1));
     }
 
     public function testMakePayment()
     {
-        $orange = $this->getMockBuilder(OrangeMoney::class)
+        $orange = $this->getMockBuilder(OrangeMoneyPayment::class)
             ->disableOriginalConstructor()->setMethods(['pay'])->getMock();
 
         $orange->method('pay')->willReturn(true);
