@@ -41,8 +41,7 @@ return [
         ],
 
         'wave' => [
-            'client_key' => '',
-            'client_secret' => '',
+            'api_key' => '', // Your Wave API key (starts with wave_sn_prod_ or wave_sn_sandbox_)
             'webhook_secret' => ''
         ],
 
