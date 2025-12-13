@@ -37,9 +37,17 @@ class OrangeMoneyGateway implements ProcessorGatewayInterface
         // Set the right production endpoint
         $payment->setPaymentEndpoint('/orange-money-webpay/v1/webpayment');
 
-        $payment->setNotifyUrl($args['notif_url']);
-        $payment->setCancelUrl($args['cancel_url']);
-        $payment->setReturnUrl($args['return_url']);
+        if (isset($args['notif_url'])) {
+            $payment->setNotifyUrl($args['notif_url']);
+        }
+
+        if (isset($args['cancel_url'])) {
+            $payment->setCancelUrl($args['cancel_url']);
+        }
+
+        if (isset($args['return_url'])) {
+            $payment->setReturnUrl($args['return_url']);
+        }
 
         $amount = $args['amount'];
         $reference = $args['reference'];
