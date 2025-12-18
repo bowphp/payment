@@ -50,11 +50,11 @@ class Payment implements ProcessorGatewayInterface
      * @var array<string, class-string>
      */
     public const CI_PROVIDER = [
-        Payment::ORANGE => \Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyGateway::class,
-        Payment::MTN => \Bow\Payment\IvoryCost\MTNMobileMoney\MTNMobileMoneyGateway::class,
-        Payment::MOOV => \Bow\Payment\IvoryCost\MoovFlooz\MoovFloozGateway::class,
-        Payment::WAVE => \Bow\Payment\IvoryCost\Wave\WaveGateway::class,
-        Payment::DJAMO => \Bow\Payment\IvoryCost\Djamo\DjamoGateway::class,
+        Payment::ORANGE => \Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyGateway::class,
+        Payment::MTN => \Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\MTNMobileMoneyGateway::class,
+        Payment::MOOV => \Bow\Payment\Gateway\IvoryCost\MoovFlooz\MoovFloozGateway::class,
+        Payment::WAVE => \Bow\Payment\Gateway\IvoryCost\Wave\WaveGateway::class,
+        Payment::DJAMO => \Bow\Payment\Gateway\IvoryCost\Djamo\DjamoGateway::class,
     ];
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bow\Payment\IvoryCost\MoovFlooz;
+namespace Bow\Payment\Gateway\IvoryCost\MoovFlooz;
 
 use Bow\Payment\Common\ProcessorGatewayInterface;
 use Bow\Payment\Exceptions\PaymentRequestException;

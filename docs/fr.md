@@ -298,8 +298,8 @@ Pour des cas d'utilisation avancés, vous pouvez utiliser les fournisseurs direc
 ### Utilisation Directe d'Orange Money
 
 ```php
-use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyGateway;
-use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyTokenGenerator;
+use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyGateway;
+use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyTokenGenerator;
 
 $config = [
     'client_key' => 'VOTRE_CLIENT_KEY',
@@ -332,9 +332,9 @@ $status = $gateway->verify([
 ### Utilisation Directe de MTN Mobile Money
 
 ```php
-use Bow\Payment\IvoryCost\MTNMobileMoney\MTNMobileMoneyGateway;
-use Bow\Payment\IvoryCost\MTNMobileMoney\MomoEnvironment;
-use Bow\Payment\IvoryCost\MTNMobileMoney\MomoTokenGenerator;
+use Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\MTNMobileMoneyGateway;
+use Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\MomoEnvironment;
+use Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\MomoTokenGenerator;
 
 $config = [
     'subscription_key' => 'VOTRE_SUBSCRIPTION_KEY',

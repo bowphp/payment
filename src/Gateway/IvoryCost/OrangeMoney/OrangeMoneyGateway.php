@@ -1,13 +1,13 @@
 <?php
 
-namespace Bow\Payment\IvoryCost\OrangeMoney;
+namespace Bow\Payment\Gateway\IvoryCost\OrangeMoney;
 
 use Bow\Payment\Common\ProcessorGatewayInterface;
 use Bow\Payment\Common\ProcessorTransactionStatusInterface;
 use Bow\Payment\Exceptions\PaymentRequestException;
-use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyPayment;
-use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyTokenGenerator;
-use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyTransaction;
+use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyPayment;
+use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyTokenGenerator;
+use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyTransaction;
 
 class OrangeMoneyGateway implements ProcessorGatewayInterface
 {

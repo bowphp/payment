@@ -1,6 +1,6 @@
 <?php
 
-namespace Bow\Payment\IvoryCost\MTNMobileMoney;
+namespace Bow\Payment\Gateway\IvoryCost\MTNMobileMoney;
 
 class MomoEnvironment
 {

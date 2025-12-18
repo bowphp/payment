@@ -1,8 +1,8 @@
 <?php
 
-use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyPayment;
-use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyToken;
-use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyTokenGenerator;
+use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyPayment;
+use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyToken;
+use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyTokenGenerator;
 
 class OrangeMoneyTest extends \PHPUnit\Framework\TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bow\Payment\IvoryCost\Wave;
+namespace Bow\Payment\Gateway\IvoryCost\Wave;
 
 use GuzzleHttp\Client as HttpClient;
 use Bow\Payment\Exceptions\PaymentRequestException;

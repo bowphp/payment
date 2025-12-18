@@ -1,9 +1,9 @@
 <?php
 
-namespace Bow\Payment\IvoryCost\OrangeMoney;
+namespace Bow\Payment\Gateway\IvoryCost\OrangeMoney;
 
 use \GuzzleHttp\Client as HttpClient;
-use Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyToken;
+use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyToken;
 
 class OrangeMoneyTokenGenerator
 {
