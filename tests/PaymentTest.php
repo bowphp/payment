@@ -29,12 +29,12 @@ class PaymentTest extends TestCase
         $this->assertArrayHasKey(Payment::DJAMO, $providers);
         
         $this->assertEquals(
-            \Bow\Payment\IvoryCost\OrangeMoney\OrangeMoneyGateway::class,
+            \Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyGateway::class,
             $providers[Payment::ORANGE]
         );
         
         $this->assertEquals(
-            \Bow\Payment\IvoryCost\MTNMobileMoney\MTNMobileMoneyGateway::class,
+            \Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\MTNMobileMoneyGateway::class,
             $providers[Payment::MTN]
         );
     }

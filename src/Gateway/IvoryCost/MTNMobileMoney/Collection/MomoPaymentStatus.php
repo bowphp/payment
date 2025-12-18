@@ -1,6 +1,6 @@
 <?php
 
-namespace Bow\Payment\IvoryCost\MTNMobileMoney\Collection;
+namespace Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\Collection;
 
 use Bow\Payment\Common\ProcessorStatusInterface;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace Bow\Payment\IvoryCost\MTNMobileMoney\Collection;
+namespace Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\Collection;
 
 use Bow\Payment\Common\Utils;
 use GuzzleHttp\Client as HttpClient;
-use Bow\Payment\IvoryCost\MTNMobileMoney\MomoToken;
-use Bow\Payment\IvoryCost\MTNMobileMoney\MomoEnvironment;
+use Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\MomoToken;
+use Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\MomoEnvironment;
 use Bow\Payment\Exceptions\PaymentRequestException;
 
 class MomoPayment

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bow\Payment\IvoryCost\OrangeMoney;
+namespace Bow\Payment\Gateway\IvoryCost\OrangeMoney;
 
 use Bow\Payment\Common\ProcessorStatusInterface;
 

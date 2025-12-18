@@ -1,6 +1,6 @@
 <?php
 
-namespace Bow\Payment\IvoryCost\Djamo;
+namespace Bow\Payment\Gateway\IvoryCost\Djamo;
 
 use Bow\Payment\Common\ProcessorGatewayInterface;
 use Bow\Payment\Exceptions\PaymentRequestException;
