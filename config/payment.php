@@ -51,4 +51,20 @@ return [
             'webhook_secret' => ''
         ]
     ],
+
+    /**
+     * Senegal payment gateways configuration
+     */
+    'senegal' => [
+        'orange' => [
+            'client_key' => '',
+            'client_secret' => '',
+            'webhook_secret' => ''
+        ],
+
+        'wave' => [
+            'api_key' => '', // Your Wave API key (starts with wave_sn_prod_ or wave_sn_sandbox_)
+            'webhook_secret' => ''
+        ],
+    ],
 ];

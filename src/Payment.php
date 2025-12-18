@@ -43,6 +43,12 @@ class Payment implements ProcessorGatewayInterface
     public const CI = 'ivory_coast';
 
     /**
+     * Senegal country identifier
+     * ISO 3166-1 alpha-2 country code for Senegal
+     */
+    public const SN = 'senegal';
+
+    /**
      * Ivory Coast payment provider mapping
      * Maps payment provider identifiers to their respective service classes
      * for payment processing in Ivory Coast (CI)
@@ -55,6 +61,18 @@ class Payment implements ProcessorGatewayInterface
         Payment::MOOV => \Bow\Payment\Gateway\IvoryCost\MoovFlooz\MoovFloozGateway::class,
         Payment::WAVE => \Bow\Payment\Gateway\IvoryCost\Wave\WaveGateway::class,
         Payment::DJAMO => \Bow\Payment\Gateway\IvoryCost\Djamo\DjamoGateway::class,
+    ];
+
+    /**
+     * Senegal payment provider mapping
+     * Maps payment provider identifiers to their respective service classes
+     * for payment processing in Senegal (SN)
+     * 
+     * @var array<string, class-string>
+     */
+    public const SN_PROVIDER = [
+        Payment::ORANGE => \Bow\Payment\Gateway\Senegal\OrangeMoney\OrangeMoneyGateway::class,
+        Payment::WAVE => \Bow\Payment\Gateway\Senegal\Wave\WaveGateway::class,
     ];
 
     /**
@@ -102,6 +120,14 @@ class Payment implements ProcessorGatewayInterface
                     throw new \InvalidArgumentException("The payment gateway [{$provider}] is not supported in country [{$country}].");
                 }
                 $config = $this->resolveConfig('ivory_coast', $provider);
+                static::$providerGateway = new $provider($config);
+                break;
+            case self::SN:
+                $provider = self::SN_PROVIDER[$provider] ?? null;
+                if ($provider === null) {
+                    throw new \InvalidArgumentException("The payment gateway [{$provider}] is not supported in country [{$country}].");
+                }
+                $config = $this->resolveConfig('senegal', $provider);
                 static::$providerGateway = new $provider($config);
                 break;
             // Other gateways can be added here
