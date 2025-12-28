@@ -2,6 +2,7 @@
 
 namespace Bow\Payment\Gateway\IvoryCost\Mono\Collection;
 
+use Bow\Payment\Common\PaymentStatus;
 use Bow\Payment\Common\ProcessorStatusInterface;
 
 class MomoPaymentStatus implements ProcessorStatusInterface
@@ -37,7 +38,7 @@ class MomoPaymentStatus implements ProcessorStatusInterface
      *
      * @return bool
      */
-    public function isFail(): bool
+    public function isFailed(): bool
     {
         return in_array($this->status, ['FAILED', 'REJECTED']);
     }
@@ -89,17 +90,19 @@ class MomoPaymentStatus implements ProcessorStatusInterface
      */
     public function getStatus(): string
     {
-        return $this->status;
-    }
+        if ($this->isSuccess()) {
+            return PaymentStatus::COMPLETED;
+        }
 
-    /**
-     * Get transaction data
-     *
-     * @return array
-     */
-    public function getData(): array
-    {
-        return $this->data;
+        if ($this->isPending()) {
+            return PaymentStatus::PENDING;
+        }
+
+        if ($this->isFailed()) {
+            return PaymentStatus::FAILED;
+        }
+
+        return PaymentStatus::UNKNOWN;
     }
 }
 

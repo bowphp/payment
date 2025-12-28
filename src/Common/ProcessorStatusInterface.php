@@ -9,7 +9,7 @@ interface ProcessorStatusInterface
      *
      * @return bool
      */
-    public function isFail();
+    public function isFailed();
 
     /**
      * Define if transaction initiated
@@ -38,4 +38,11 @@ interface ProcessorStatusInterface
      * @return bool
      */
     public function isPending();
+
+    /**
+     * Get payment status string
+     *
+     * @return string
+     */
+    public function getStatus(): string;
 }
