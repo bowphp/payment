@@ -1,14 +1,14 @@
 <?php
 
-namespace Bow\Payment\Gateway\IvoryCost\MTNMobileMoney;
+namespace Bow\Payment\Gateway\IvoryCost\Mono;
 
 use Bow\Payment\Common\ProcessorGatewayInterface;
-use Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\Collection\MomoPayment;
-use Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\Collection\MomoTransaction;
-use Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\MomoTokenGenerator;
-use Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\MomoEnvironment;
+use Bow\Payment\Gateway\IvoryCost\Mono\Collection\MomoPayment;
+use Bow\Payment\Gateway\IvoryCost\Mono\Collection\MomoTransaction;
+use Bow\Payment\Gateway\IvoryCost\Mono\MomoTokenGenerator;
+use Bow\Payment\Gateway\IvoryCost\Mono\MomoEnvironment;
 
-class MTNMobileMoneyGateway implements ProcessorGatewayInterface
+class MonoGateway implements ProcessorGatewayInterface
 {
     /**
      * Environment instance

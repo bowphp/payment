@@ -11,9 +11,9 @@ class TransactionVerificationException extends PaymentException
      * Create a new transaction verification exception
      *
      * @param string $transactionId
-     * @param \Exception|null $previous
+     * @param ?\Exception $previous
      */
-    public function __construct(string $transactionId = '', \Exception $previous = null)
+    public function __construct(string $transactionId = '', ?\Exception $previous = null)
     {
         $message = $transactionId
             ? "Failed to verify transaction [{$transactionId}]"

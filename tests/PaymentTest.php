@@ -34,7 +34,7 @@ class PaymentTest extends TestCase
         );
         
         $this->assertEquals(
-            \Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\MTNMobileMoneyGateway::class,
+            \Bow\Payment\Gateway\IvoryCost\Mono\MonoGateway::class,
             $providers[Payment::MTN]
         );
     }
