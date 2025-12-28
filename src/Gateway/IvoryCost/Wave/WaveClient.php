@@ -24,20 +24,12 @@ class WaveClient
     private HttpClient $http;
 
     /**
-     * API Key
-     *
-     * @var string
-     */
-    private string $apiKey;
-
-    /**
      * WaveClient constructor
      *
      * @param string $apiKey
      */
     public function __construct(string $apiKey)
     {
-        $this->apiKey = $apiKey;
         $this->http = new HttpClient([
             'base_uri' => self::BASE_URL,
             'headers' => [
@@ -60,6 +52,7 @@ class WaveClient
     {
         try {
             $headers = [];
+
             if ($idempotencyKey !== null) {
                 $headers['Idempotency-Key'] = $idempotencyKey;
             }

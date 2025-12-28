@@ -1,16 +1,16 @@
 <?php
 
-namespace Bow\Payment\Gateway\IvoryCost\OrangeMoney;
+namespace Bow\Payment\Gateway\IvoryCost\Orange;
 
 use \GuzzleHttp\Client as HttpClient;
-use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyToken;
+use Bow\Payment\Gateway\IvoryCost\Orange\OrangeToken;
 
-class OrangeMoneyTransaction
+class OrangeTransaction
 {
     /**
      * The token generator response
      *
-     * @var OrangeMoneyToken
+     * @var OrangeToken
      */
     private $token;
 
@@ -29,12 +29,12 @@ class OrangeMoneyTransaction
     private $endpoint = '/orange-money-webpay/dev/v1/transactionstatus';
 
     /**
-     * OrangeMoneyTransactionStatus constructor
+     * OrangeTransactionStatus constructor
      *
-     * @param OrangeMoneyToken $token
+     * @param OrangeToken $token
      * @return mixed
      */
-    public function __construct(OrangeMoneyToken $token)
+    public function __construct(OrangeToken $token)
     {
         $this->token = $token;
 
@@ -73,7 +73,7 @@ class OrangeMoneyTransaction
         // Cast the request response
         $status = json_decode($response->getBody()->getContents());
 
-        return new OrangeMoneyTransactionStatus(
+        return new OrangeTransactionStatus(
             $status->status,
             $status->notif_token
         );

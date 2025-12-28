@@ -298,20 +298,20 @@ For advanced use cases, you can use providers directly:
 ### Orange Money Direct Usage
 
 ```php
-use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyGateway;
-use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyTokenGenerator;
+use Bow\Payment\Gateway\IvoryCost\Orange\OrangeGateway;
+use Bow\Payment\Gateway\IvoryCost\Orange\OrangeTokenGenerator;
 
 $config = [
     'client_key' => 'YOUR_CLIENT_KEY',
     'client_secret' => 'YOUR_CLIENT_SECRET',
 ];
 
-$tokenGenerator = new OrangeMoneyTokenGenerator(
+$tokenGenerator = new OrangeTokenGenerator(
     $config['client_key'],
     $config['client_secret']
 );
 
-$gateway = new OrangeMoneyGateway($tokenGenerator, $config);
+$gateway = new OrangeGateway($tokenGenerator, $config);
 
 $result = $gateway->payment([
     'amount' => 1000,

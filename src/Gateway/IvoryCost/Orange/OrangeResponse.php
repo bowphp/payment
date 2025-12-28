@@ -1,11 +1,11 @@
 <?php
 
-namespace Bow\Payment\Gateway\IvoryCost\OrangeMoney;
+namespace Bow\Payment\Gateway\IvoryCost\Orange;
 
-class OrangeMoneyResponse
+class OrangeResponse
 {
     /**
-     * OrangeMoneyPaymentStatus constructor
+     * OrangePaymentStatus constructor
      *
      * @param string $payment_url
      * @param string $pay_token

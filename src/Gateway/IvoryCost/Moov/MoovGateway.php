@@ -1,6 +1,6 @@
 <?php
 
-namespace Bow\Payment\Gateway\IvoryCost\MoovFlooz;
+namespace Bow\Payment\Gateway\IvoryCost\Moov;
 
 use Bow\Payment\Common\ProcessorGatewayInterface;
 use Bow\Payment\Exceptions\PaymentRequestException;
@@ -9,7 +9,7 @@ use Bow\Payment\Exceptions\PaymentRequestException;
  * Moov Money (Flooz) Gateway
  * Note: This is a placeholder implementation pending official Moov Money API documentation
  */
-class MoovFloozGateway implements ProcessorGatewayInterface
+class MoovGateway implements ProcessorGatewayInterface
 {
     /**
      * Configuration array
@@ -31,11 +31,11 @@ class MoovFloozGateway implements ProcessorGatewayInterface
     /**
      * Make payment
      *
-     * @param mixed ...$args
+     * @param array $params
      * @return mixed
      * @throws PaymentRequestException
      */
-    public function payment(...$args)
+    public function payment(array $params)
     {
         throw new PaymentRequestException(
             'Moov Money (Flooz) payment gateway is not yet implemented. Implementation pending official API documentation.'
@@ -45,11 +45,11 @@ class MoovFloozGateway implements ProcessorGatewayInterface
     /**
      * Make transfer
      *
-     * @param mixed ...$args
+     * @param array $params
      * @return mixed
      * @throws PaymentRequestException
      */
-    public function transfer(...$args)
+    public function transfer(array $params)
     {
         throw new PaymentRequestException(
             'Moov Money (Flooz) transfer is not yet implemented.'
@@ -59,11 +59,11 @@ class MoovFloozGateway implements ProcessorGatewayInterface
     /**
      * Get balance
      *
-     * @param mixed ...$args
+     * @param array $params
      * @return mixed
      * @throws PaymentRequestException
      */
-    public function balance(...$args)
+    public function balance(array $params = [])
     {
         throw new PaymentRequestException(
             'Moov Money (Flooz) balance inquiry is not yet implemented.'
@@ -73,14 +73,25 @@ class MoovFloozGateway implements ProcessorGatewayInterface
     /**
      * Verify payment
      *
-     * @param mixed ...$args
+     * @param mixed array $params
      * @return mixed
      * @throws PaymentRequestException
      */
-    public function verify(...$args)
+    public function verify(array $params)
     {
         throw new PaymentRequestException(
             'Moov Money (Flooz) payment verification is not yet implemented.'
         );
+    }
+
+    /**
+     * Validate payment data
+     *
+     * @param array $params
+     * @return void
+     */
+    public function validatePaymentData(array $params): void
+    {
+        // Validation logic can be implemented here as needed
     }
 }

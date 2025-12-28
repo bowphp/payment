@@ -1,11 +1,11 @@
 <?php
 
-namespace Bow\Payment\Gateway\IvoryCost\OrangeMoney;
+namespace Bow\Payment\Gateway\IvoryCost\Orange;
 
 use \GuzzleHttp\Client as HttpClient;
-use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyToken;
+use Bow\Payment\Gateway\IvoryCost\Orange\OrangeToken;
 
-class OrangeMoneyPayment
+class OrangePayment
 {
     /**
      * HTTP client instance
@@ -43,14 +43,14 @@ class OrangeMoneyPayment
     private $notif_url;
     
     /**
-     * OrangeMoney constructor
+     * Orange constructor
      *
-     * @param OrangeMoneyToken $token
+     * @param OrangeToken $token
      * @param string $merchant_key
      * @param string $currency
      * @return mixed
      */
-    public function __construct(private OrangeMoneyToken $token, private string $merchant_key, private string $currency = 'OUV')
+    public function __construct(private OrangeToken $token, private string $merchant_key, private string $currency = 'OUV')
     {
         $this->http = new HttpClient(['base_uri' => 'https://api.orange.com']);
     }
@@ -60,7 +60,7 @@ class OrangeMoneyPayment
      *
      * @param int|double $amount
      * @param string $reference
-     * @return OrangeMoney
+     * @return Orange
      */
     public function prepare($amount, string $reference)
     {
@@ -76,7 +76,7 @@ class OrangeMoneyPayment
         // Parse Json data
         $data = json_decode($response->getBody()->getContents(), true);
 
-        return new OrangeMoneyResponse(
+        return new OrangeResponse(
             $data['payment_url'],
             $data['pay_token'],
             $data['notif_token']
