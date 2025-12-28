@@ -48,19 +48,21 @@ class MonoGateway implements ProcessorGatewayInterface
     /**
      * Make payment
      *
-     * @param mixed ...$args
+     * @param array $params
      * @return mixed
      */
-    public function payment(...$args)
+    public function payment(array $params)
     {
         $token = $this->tokenGenerator->getToken();
 
         $payment = new MomoPayment($token, $this->environment);
 
-        $amount = $args['amount'] ?? $args[0];
-        $phone = $args['phone'] ?? $args[1];
-        $reference = $args['reference'] ?? $args[2] ?? uniqid('momo_');
-        $currency = $args['currency'] ?? 'XOF';
+        $this->validatePaymentData($params);
+
+        $amount = $params['amount'];
+        $phone = $params['phone_number'];
+        $reference = $params['reference'] ?? uniqid('momo_');
+        $currency = $params['currency'] ?? 'XOF';
 
         return $payment->requestToPay([
             'amount' => $amount,
@@ -75,10 +77,10 @@ class MonoGateway implements ProcessorGatewayInterface
     /**
      * Make transfer
      *
-     * @param mixed ...$args
+     * @param array $params
      * @return mixed
      */
-    public function transfer(...$args)
+    public function transfer(array $params)
     {
         // MTN Mobile Money CI uses Collection API for payments
         // Transfer functionality would require Disbursement API
@@ -88,10 +90,10 @@ class MonoGateway implements ProcessorGatewayInterface
     /**
      * Get balance
      *
-     * @param mixed ...$args
+     * @param array $params
      * @return mixed
      */
-    public function balance(...$args)
+    public function balance(array $params = [])
     {
         $token = $this->tokenGenerator->getToken();
         $transaction = new MomoTransaction($token, $this->environment);
@@ -104,13 +106,25 @@ class MonoGateway implements ProcessorGatewayInterface
      *
      * @return mixed
      */
-    public function verify(...$args)
+    public function verify(array $params)
     {
         $token = $this->tokenGenerator->getToken();
+
         $transaction = new MomoTransaction($token, $this->environment);
 
-        $referenceId = $args['reference_id'] ?? $args[0];
+        $referenceId = $params['reference'];
 
         return $transaction->getTransactionStatus($referenceId);
+    }
+
+    /**
+     * Validate payment data
+     *
+     * @param array $params
+     * @return void
+     */
+    public function validatePaymentData(array $params): void
+    {
+        // Validation logic can be implemented here as needed
     }
 }

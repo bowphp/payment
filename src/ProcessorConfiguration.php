@@ -5,7 +5,7 @@ namespace Bow\Payment;
 use Bow\Configuration\Configuration;
 use Bow\Configuration\Loader as Config;
 
-class PaymentConfiguration extends Configuration
+class ProcessorConfiguration extends Configuration
 {
     /**
      * Create payment configuration

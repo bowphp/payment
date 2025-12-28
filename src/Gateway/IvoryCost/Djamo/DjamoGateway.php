@@ -31,11 +31,11 @@ class DjamoGateway implements ProcessorGatewayInterface
     /**
      * Make payment
      *
-     * @param mixed ...$args
+     * @param array $params
      * @return mixed
      * @throws PaymentRequestException
      */
-    public function payment(...$args)
+    public function payment(array $params)
     {
         throw new PaymentRequestException(
             'Djamo payment gateway is not yet implemented. Implementation pending official API documentation.'
@@ -45,11 +45,11 @@ class DjamoGateway implements ProcessorGatewayInterface
     /**
      * Make transfer
      *
-     * @param mixed ...$args
+     * @param array $params
      * @return mixed
      * @throws PaymentRequestException
      */
-    public function transfer(...$args)
+    public function transfer(array $params)
     {
         throw new PaymentRequestException(
             'Djamo transfer is not yet implemented.'
@@ -59,11 +59,11 @@ class DjamoGateway implements ProcessorGatewayInterface
     /**
      * Get balance
      *
-     * @param mixed ...$args
+     * @param array $params
      * @return mixed
      * @throws PaymentRequestException
      */
-    public function balance(...$args)
+    public function balance(array $params = [])
     {
         throw new PaymentRequestException(
             'Djamo balance inquiry is not yet implemented.'
@@ -73,14 +73,25 @@ class DjamoGateway implements ProcessorGatewayInterface
     /**
      * Verify payment
      *
-     * @param mixed ...$args
+     * @param array $params
      * @return mixed
      * @throws PaymentRequestException
      */
-    public function verify(...$args)
+    public function verify(array $params)
     {
         throw new PaymentRequestException(
             'Djamo payment verification is not yet implemented.'
         );
+    }
+    
+    /**
+     * Validate payment data
+     *
+     * @param array $params
+     * @return void
+     */
+    public function validatePaymentData(array $params): void
+    {
+        // Implement validation logic as per Djamo's requirements when available
     }
 }

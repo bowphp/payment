@@ -1,8 +1,8 @@
 <?php
 
-namespace Bow\Payment\Gateway\Senegal\OrangeMoney;
+namespace Bow\Payment\Gateway\Senegal\Orange;
 
-use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyGateway as BaseOrangeMoneyGateway;
+use Bow\Payment\Gateway\IvoryCost\Orange\OrangeGateway as BaseOrangeGateway;
 
 /**
  * Orange Money Gateway for Senegal
@@ -12,7 +12,7 @@ use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyGateway as BaseOrangeMo
  * The API endpoints and authentication methods are the same
  * but may use different credentials and regional configurations
  */
-class OrangeMoneyGateway extends BaseOrangeMoneyGateway
+class OrangeGateway extends BaseOrangeGateway
 {
     // Inherits all functionality from the base Orange Money gateway
     // Orange Money API is the same for Senegal and Ivory Coast

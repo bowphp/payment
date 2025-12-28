@@ -5,6 +5,7 @@ namespace Bow\Payment\Gateway\IvoryCost\Wave;
 use Bow\Payment\Common\ProcessorGatewayInterface;
 use Bow\Payment\Exceptions\PaymentRequestException;
 use Bow\Payment\Exceptions\ConfigurationException;
+use Bow\Payment\Exceptions\InputValidationException;
 
 /**
  * Wave Gateway
@@ -43,57 +44,76 @@ class WaveGateway implements ProcessorGatewayInterface
     /**
      * Make payment - Create a Wave checkout session
      *
-     * @param mixed ...$args
+     * @param array $params
      * @return array
      * @throws PaymentRequestException
      * 
      * Expected parameters:
      * - amount: (required) Amount to collect
-     * - notify_url: (required) Redirect URL on notification
-     * - success_url: (required) Redirect URL on success
-     * - error_url: (required) Redirect URL on error
+     * - reference: (optional) Your unique reference
      * - currency: (optional) Currency code (default: XOF)
-     * - client_reference: (optional) Your unique reference (max 255 chars)
-     * - restrict_payer_mobile: (optional) Phone number (E.164 format)
-     * - aggregated_merchant_id: (optional) For aggregators only
-     * - idempotency_key: (optional) Unique key to prevent duplicate payments (auto-generated if not provided)
+     * - optoons: (optional) Additional payment options
+     *      - notify_url: (required) Redirect URL on notification
+     *      - success_url: (required) Redirect URL on success
+     *      - error_url: (required) Redirect URL on error
+     *      - restrict_payer_mobile: (optional) Phone number (E.164 format)
+     *      - aggregated_merchant_id: (optional) For aggregators only
+     *      - idempotency_key: (optional) Unique key to prevent duplicate payments (auto-generated if not provided)
      */
-    public function payment(...$args)
+    public function payment(array $params): array
     {
+        if (!isset($params['options']) || !is_array($params['options'])) {
+            $params['options'] = [];
+        }
+
+        // Merge default options from config
+        $params['options'] = array_merge(
+            $this->config['options'] ?? [],
+            $params['options']
+        );
+
         // Validate required fields
-        $this->validatePaymentData($args);
+        $this->validatePaymentData($params);
 
         // Generate idempotency key if not provided (prevents duplicate payments)
-        $idempotencyKey = $args['idempotency_key'] ?? $this->generateIdempotencyKey();
+        $idempotencyKey = $params['options']['idempotency_key'] ?? $this->generateIdempotencyKey();
 
         // Create checkout session
         $session = $this->client->createCheckoutSession(
             [
-                'amount' => $args['amount'],
-                'currency' => $args['currency'] ?? 'XOF',
-                'notify_url' => $args['notify_url'],
-                'success_url' => $args['success_url'],
-                'error_url' => $args['error_url'],
-                'client_reference' => $args['client_reference'] ?? null,
-                'restrict_payer_mobile' => $args['restrict_payer_mobile'] ?? null,
-                'aggregated_merchant_id' => $args['aggregated_merchant_id'] ?? null,
+                'amount' => $params['amount'],
+                'currency' => $params['currency'] ?? 'XOF',
+                'client_reference' => $params['reference'] ?? null,
+                'notify_url' => $params['options']['notify_url'] ?? null,
+                'success_url' => $params['options']['success_url'] ?? null,
+                'error_url' => $params['options']['error_url'] ?? null,
+                'restrict_payer_mobile' => $params['options']['restrict_payer_mobile'] ?? false,
+                'aggregated_merchant_id' => $params['options']['aggregated_merchant_id'] ?? null,
             ],
             $idempotencyKey
         );
 
         return [
-            'success' => true,
-            'session_id' => $session->getId(),
-            'wave_launch_url' => $session->getWaveLaunchUrl(),
-            'amount' => $session->getAmount(),
-            'currency' => $args['currency'] ?? 'XOF',
-            'checkout_status' => $session->getCheckoutStatus(),
-            'payment_status' => $session->getPaymentStatus(),
-            'transaction_id' => $session->getTransactionId(),
-            'client_reference' => $session->getClientReference(),
-            'when_expires' => $session->toArray()['when_expires'],
-            'idempotency_key' => $idempotencyKey,
-            'session' => $session,
+            'status' => 'success',
+            'reference' => $params['reference'],
+            'payment_url' => $session->getWaveLaunchUrl(),
+            'provider' => 'wave',
+            'provider_transaction_id' => $session->getTransactionId(),
+            'provider_status' => $session->getPaymentStatus(),
+            'provider_data' => [
+                'success' => true,
+                'session_id' => $session->getId(),
+                'wave_launch_url' => $session->getWaveLaunchUrl(),
+                'amount' => $session->getAmount(),
+                'currency' => $args['currency'] ?? 'XOF',
+                'checkout_status' => $session->getCheckoutStatus(),
+                'payment_status' => $session->getPaymentStatus(),
+                'transaction_id' => $session->getTransactionId(),
+                'client_reference' => $session->getClientReference(),
+                'when_expires' => $session->toArray()['when_expires'],
+                'idempotency_key' => $idempotencyKey,
+                'session' => $session,
+            ],
         ];
     }
 
@@ -107,25 +127,25 @@ class WaveGateway implements ProcessorGatewayInterface
      * Expected parameters:
      * - session_id: (optional) Checkout session ID
      * - transaction_id: (optional) Transaction ID
-     * - client_reference: (optional) Your unique reference
+     * - reference: (optional) Your unique reference
      * 
      * Note: Provide at least one of the above identifiers
      */
-    public function verify(...$args)
+    public function verify(array $params)
     {
         $session = null;
 
         // Try to retrieve by session ID
-        if (isset($args['session_id'])) {
-            $session = $this->client->retrieveCheckoutSession($args['session_id']);
+        if (isset($params['session_id'])) {
+            $session = $this->client->retrieveCheckoutSession($params['session_id']);
         }
         // Try to retrieve by transaction ID
-        elseif (isset($args['transaction_id'])) {
-            $session = $this->client->retrieveCheckoutByTransactionId($args['transaction_id']);
+        elseif (isset($params['transaction_id'])) {
+            $session = $this->client->retrieveCheckoutByTransactionId($params['transaction_id']);
         }
         // Try to search by client reference
-        elseif (isset($args['client_reference'])) {
-            $sessions = $this->client->searchCheckoutSessions($args['client_reference']);
+        elseif (isset($params['client_reference'])) {
+            $sessions = $this->client->searchCheckoutSessions($params['client_reference']);
             if (empty($sessions)) {
                 throw new PaymentRequestException('No checkout session found with the provided client reference');
             }
@@ -244,34 +264,38 @@ class WaveGateway implements ProcessorGatewayInterface
      * Validate payment data
      *
      * @param array $data
-     * @throws PaymentRequestException
+     * @throws InputValidationException
      */
-    private function validatePaymentData(array $data): void
+    public function validatePaymentData(array $data): void
     {
         if (!isset($data['amount']) || empty($data['amount'])) {
-            throw new PaymentRequestException('Amount is required for Wave payment');
+            throw new InputValidationException('Amount is required for Wave payment');
         }
 
-        if (!isset($data['success_url']) || empty($data['success_url'])) {
-            throw new PaymentRequestException('Success URL is required for Wave payment');
+        if (!isset($data['reference']) || empty($data['reference'])) {
+            throw new InputValidationException('Reference is required for Wave payment');
         }
 
-        if (!isset($data['error_url']) || empty($data['error_url'])) {
-            throw new PaymentRequestException('Error URL is required for Wave payment');
+        if (!isset($data['currency']) || empty($data['currency'])) {
+            throw new InputValidationException('Currency is required for Wave payment');
         }
 
         // Validate URLs are HTTPS
-        if (!str_starts_with($data['success_url'], 'https://')) {
-            throw new PaymentRequestException('Success URL must use HTTPS protocol');
+        if (isset($data['options']['success_url']) && !str_starts_with($data['options']['success_url'], 'https://')) {
+            throw new InputValidationException('Success URL must use HTTPS protocol');
         }
 
-        if (!str_starts_with($data['error_url'], 'https://')) {
-            throw new PaymentRequestException('Error URL must use HTTPS protocol');
+        if (isset($data['options']['error_url']) && !str_starts_with($data['options']['error_url'], 'https://')) {
+            throw new InputValidationException('Error URL must use HTTPS protocol');
+        }
+
+        if (isset($data['options']['cancel_url']) && !str_starts_with($data['options']['cancel_url'], 'https://')) {
+            throw new InputValidationException('Cancel URL must use HTTPS protocol');
         }
 
         // Validate amount is positive
         if (floatval($data['amount']) <= 0) {
-            throw new PaymentRequestException('Amount must be greater than zero');
+            throw new InputValidationException('Amount must be greater than zero');
         }
 
         // Validate currency if provided
@@ -280,7 +304,7 @@ class WaveGateway implements ProcessorGatewayInterface
             if ($currency === 'XOF') {
                 // XOF doesn't allow decimals
                 if (strpos((string) $data['amount'], '.') !== false) {
-                    throw new PaymentRequestException(
+                    throw new InputValidationException(
                         'XOF currency does not allow decimal places. Amount must be a whole number.'
                     );
                 }

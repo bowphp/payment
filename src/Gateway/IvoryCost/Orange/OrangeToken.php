@@ -1,8 +1,8 @@
 <?php
 
-namespace Bow\Payment\Gateway\IvoryCost\OrangeMoney;
+namespace Bow\Payment\Gateway\IvoryCost\Orange;
 
-class OrangeMoneyToken
+class OrangeToken
 {
     /**
      * Define the access token value

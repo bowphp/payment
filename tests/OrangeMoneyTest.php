@@ -1,39 +1,39 @@
 <?php
 
-use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyPayment;
-use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyToken;
-use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyTokenGenerator;
+use Bow\Payment\Gateway\IvoryCost\Orange\OrangePayment;
+use Bow\Payment\Gateway\IvoryCost\Orange\OrangeToken;
+use Bow\Payment\Gateway\IvoryCost\Orange\OrangeTokenGenerator;
 
-class OrangeMoneyTest extends \PHPUnit\Framework\TestCase
+class OrangeTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetToken()
     {
-        $stub = $this->createMock(OrangeMoneyTokenGenerator::class);
+        $stub = $this->createMock(OrangeTokenGenerator::class);
         $stub->expects($this->once())->method('getToken')
-            ->willReturn($this->getMockBuilder(OrangeMoneyToken::class)
+            ->willReturn($this->getMockBuilder(OrangeToken::class)
             ->disableOriginalConstructor()->getMock());
 
-        $this->assertInstanceOf(OrangeMoneyToken::class, $stub->getToken());
+        $this->assertInstanceOf(OrangeToken::class, $stub->getToken());
     }
 
     public function testPreparePayment()
     {
-        $token = $this->getMockBuilder(OrangeMoneyToken::class)
+        $token = $this->getMockBuilder(OrangeToken::class)
             ->disableOriginalConstructor()->getMock();
         
-        $payment = $this->getMockBuilder(OrangeMoneyPayment::class)
+        $payment = $this->getMockBuilder(OrangePayment::class)
             ->setConstructorArgs([$token, 123456])
             ->setMethods(['prepare'])->getMock();
 
-        $payment_status = $this->createMock(OrangeMoneyPayment::class);
+        $payment_status = $this->createMock(OrangePayment::class);
         $payment->method('prepare')->willReturn($payment_status);
 
-        $this->assertInstanceOf(OrangeMoneyPayment::class, $payment->prepare(500, 'reference', 1));
+        $this->assertInstanceOf(OrangePayment::class, $payment->prepare(500, 'reference', 1));
     }
 
     public function testMakePayment()
     {
-        $orange = $this->getMockBuilder(OrangeMoneyPayment::class)
+        $orange = $this->getMockBuilder(OrangePayment::class)
             ->disableOriginalConstructor()->setMethods(['pay'])->getMock();
 
         $orange->method('pay')->willReturn(true);

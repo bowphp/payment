@@ -1,18 +1,17 @@
 <?php
 
-namespace Bow\Payment\Gateway\IvoryCost\OrangeMoney;
+namespace Bow\Payment\Gateway\IvoryCost\Orange;
 
 use Bow\Payment\Common\ProcessorGatewayInterface;
-use Bow\Payment\Common\ProcessorTransactionStatusInterface;
 use Bow\Payment\Exceptions\PaymentRequestException;
-use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyPayment;
-use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyTokenGenerator;
-use Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyTransaction;
+use Bow\Payment\Gateway\IvoryCost\Orange\OrangePayment;
+use Bow\Payment\Gateway\IvoryCost\Orange\OrangeTokenGenerator;
+use Bow\Payment\Gateway\IvoryCost\Orange\OrangeTransaction;
 
-class OrangeMoneyGateway implements ProcessorGatewayInterface
+class OrangeGateway implements ProcessorGatewayInterface
 {
     /**
-     * ForOrangeMoney constructor
+     * ForOrange constructor
      *
      * @param array $config
      */
@@ -25,11 +24,11 @@ class OrangeMoneyGateway implements ProcessorGatewayInterface
     *
     * @return void
     */
-    public function payment(...$args)
+    public function payment(array $params)
     {
         $token_generator = $this->getTokenGenerator();
 
-        $payment = new OrangeMoneyPayment(
+        $payment = new OrangePayment(
             $token_generator->getToken(), 
             $this->config['client_secret'],
         );
@@ -37,20 +36,20 @@ class OrangeMoneyGateway implements ProcessorGatewayInterface
         // Set the right production endpoint
         $payment->setPaymentEndpoint('/orange-money-webpay/v1/webpayment');
 
-        if (isset($args['notif_url'])) {
-            $payment->setNotifyUrl($args['notif_url']);
+        if (isset($params['notif_url'])) {
+            $payment->setNotifyUrl($params['notif_url']);
         }
 
-        if (isset($args['cancel_url'])) {
-            $payment->setCancelUrl($args['cancel_url']);
+        if (isset($params['cancel_url'])) {
+            $payment->setCancelUrl($params['cancel_url']);
         }
 
-        if (isset($args['return_url'])) {
-            $payment->setReturnUrl($args['return_url']);
+        if (isset($params['return_url'])) {
+            $payment->setReturnUrl($params['return_url']);
         }
 
-        $amount = $args['amount'];
-        $reference = $args['reference'];
+        $amount = $params['amount'];
+        $reference = $params['reference'];
 
         $orange = $payment->prepare($amount, $reference);
 
@@ -63,22 +62,22 @@ class OrangeMoneyGateway implements ProcessorGatewayInterface
     /**
      * Verify payment
      *
-     * @param array ...$args
+     * @param array $params
      * @return ProcessorStatusInterface
      */
-    public function verify(...$args)
+    public function verify(array $params)
     {
         $token_generator = $this->getTokenGenerator();
 
         // Transaction status
-        $transaction = new OrangeMoneyTransaction($token_generator->getToken());
+        $transaction = new OrangeTransaction($token_generator->getToken());
 
         // Set the production url
         $transaction->setTransactionStatusEndpoint('/orange-money-webpay/v1/transactionstatus');
 
-        $amount = $args['amount'];
-        $order_id = $args['order_id'];
-        $pay_token = $args['pay_token'];
+        $amount = $params['amount'];
+        $order_id = $params['order_id'];
+        $pay_token = $params['pay_token'];
 
         // Check the transaction status
         return $transaction->check($amount, $order_id, $pay_token);
@@ -87,10 +86,10 @@ class OrangeMoneyGateway implements ProcessorGatewayInterface
     /**
      * Transfer money
      *
-     * @param array ...$args
+     * @param array $params
      * @return mixed
      */
-    public function transfer(...$args)
+    public function transfer(array $params)
     {
         throw new PaymentRequestException(
             'Orange Money payment gateway is not yet implemented. Implementation pending official API documentation.'
@@ -100,10 +99,10 @@ class OrangeMoneyGateway implements ProcessorGatewayInterface
     /**
      * Get balance
      *
-     * @param array ...$args
+     * @param array $params
      * @return mixed
      */
-    public function balance(...$args)
+    public function balance(array $params = [])
     {
         throw new PaymentRequestException(
             'Orange Money balance inquiry is not yet implemented.'
@@ -111,13 +110,24 @@ class OrangeMoneyGateway implements ProcessorGatewayInterface
     }
 
     /**
+     * Validate payment data
+     *
+     * @param array $params
+     * @return void
+     */
+    public function validatePaymentData(array $params): void
+    {
+        // Validation logic can be implemented here as needed
+    }
+
+    /**
      * Create the Token Generator instance
      *
-     * @return OrangeMoneyTokenGenerator
+     * @return OrangeTokenGenerator
      */
     private function getTokenGenerator()
     {
-        $token_generator = new OrangeMoneyTokenGenerator($this->config['client_key']);
+        $token_generator = new OrangeTokenGenerator($this->config['client_key']);
 
         // Set the right production endpoint
         $token_generator->setTokenGeneratorEndpoint('/oauth/v2/token');

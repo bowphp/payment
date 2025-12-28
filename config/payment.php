@@ -1,6 +1,6 @@
 <?php
 
-use Bow\Payment\Payment;
+use Bow\Payment\Processor;
 
 return [
     /**
@@ -12,8 +12,8 @@ return [
      * The default gateway
      */
     'default' => [
-        'gateway' => Payment::ORANGE,
-        'country' => 'ci',
+        'gateway' => Processor::ORANGE,
+        'country' => 'ivory_coast',
     ],
 
     /**
@@ -23,32 +23,60 @@ return [
         'orange' => [
             'client_key' => '',
             'client_secret' => '',
-            'webhook_secret' => ''
+            'webhook_secret' => '',
+            'options' => [
+                'notif_url' => '', // Notification URL
+                'return_url' => '', // Return URL after payment
+                'cancel_url' => '', // Cancel URL if payment failed
+            ],
         ],
 
         'mtn' => [
-            'subscription_key' => '',
             'api_user' => '',
             'api_key' => '',
-            'environment' => 'sandbox', // or 'production'
-            'webhook_secret' => ''
+            'webhook_secret' => '',
+            'subscription_key' => '',
+            'options' => [
+                'notif_url' => '', // Notification URL
+                'return_url' => '', // Return URL after payment
+                'cancel_url' => '', // Cancel URL if payment failed
+            ],
         ],
 
         'moov' => [
             'client_key' => '',
             'client_secret' => '',
-            'webhook_secret' => ''
+            'webhook_secret' => '',
+            'options' => [
+                'merchant_id' => '',
+                'notif_url' => '', // Notification URL
+                'return_url' => '', // Return URL after payment
+                'cancel_url' => '', // Cancel URL if payment failed
+            ],
         ],
 
         'wave' => [
             'api_key' => '', // Your Wave API key (starts with wave_sn_prod_ or wave_sn_sandbox_)
-            'webhook_secret' => ''
+            'webhook_secret' => '',
+            'aggregated_merchant_id' => '',
+            'options' => [
+                'restrict_payer_mobile' => false,
+                'aggregated_merchant_id' => '', // Aggregated Merchant ID for Senegal to override default
+                'notif_url' => '', // Notification URL
+                'success_url' => '', // Success URL after payment
+                'error_url' => '', // Error URL if payment failed
+            ],
         ],
 
         'djamo' => [
             'client_key' => '',
             'client_secret' => '',
-            'webhook_secret' => ''
+            'webhook_secret' => '',
+            'options' => [
+                'notif_url' => '', // Notification URL
+                'return_url' => '', // Return URL after payment
+                'cancel_url' => '', // Cancel URL if payment failed
+            ],
         ]
     ],
 
@@ -59,12 +87,25 @@ return [
         'orange' => [
             'client_key' => '',
             'client_secret' => '',
-            'webhook_secret' => ''
+            'webhook_secret' => '',
+            'options' => [
+                'notif_url' => '', // Notification URL
+                'return_url' => '', // Return URL after payment
+                'cancel_url' => '', // Cancel URL if payment failed
+            ],
         ],
 
         'wave' => [
             'api_key' => '', // Your Wave API key (starts with wave_sn_prod_ or wave_sn_sandbox_)
-            'webhook_secret' => ''
+            'webhook_secret' => '',
+            'aggregated_merchant_id' => '',
+            'options' => [
+                'restrict_payer_mobile' => false,
+                'aggregated_merchant_id' => '', // Aggregated Merchant ID for Senegal to override default
+                'notif_url' => '', // Notification URL
+                'success_url' => '', // Success URL after payment
+                'error_url' => '', // Error URL if payment failed
+            ],
         ],
     ],
 ];

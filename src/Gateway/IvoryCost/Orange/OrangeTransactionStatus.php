@@ -1,10 +1,10 @@
 <?php
 
-namespace Bow\Payment\Gateway\IvoryCost\OrangeMoney;
+namespace Bow\Payment\Gateway\IvoryCost\Orange;
 
 use Bow\Payment\Common\ProcessorStatusInterface;
 
-class OrangeMoneyTransactionStatus implements ProcessorStatusInterface
+class OrangeTransactionStatus implements ProcessorStatusInterface
 {
     /**
      * Define the transaction status
@@ -14,7 +14,7 @@ class OrangeMoneyTransactionStatus implements ProcessorStatusInterface
     private $status;
 
     /**
-     * OrangeMoneyTransactionStatus constructor
+     * OrangeTransactionStatus constructor
      *
      * @param string $status
      * @return void

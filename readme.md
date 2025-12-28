@@ -39,7 +39,7 @@ use Bow\Payment\Payment;
 return [
     'default' => [
         'gateway' => Payment::ORANGE,
-        'country' => 'ci',
+        'country' => 'ivory_coast',
     ],
     
     'ivory_coast' => [
@@ -66,22 +66,26 @@ return [
 use Bow\Payment\Payment;
 
 // Configure the payment gateway
-Payment::configure($config);
+$gateway = Payment::configure($config);
 
 // Make a payment
-Payment::payment([
+$gateway->payment([
     'amount' => 1000,
+    'phone_number' => '+225070000001',
     'reference' => 'ORDER-123',
-    'notif_url' => 'https://your-app.com/webhook',
-    'return_url' => 'https://your-app.com/success',
-    'cancel_url' => 'https://your-app.com/cancel',
+    'options' => [
+        'notif_url' => 'https://your-app.com/webhook',
+        'return_url' => 'https://your-app.com/success',
+        'cancel_url' => 'https://your-app.com/cancel',
+    ]
 ]);
 
 // Verify a transaction
-$status = Payment::verify([
-    'amount' => 1000,
-    'order_id' => 'ORDER-123',
-    'pay_token' => 'TOKEN',
+$status = $gateway->verify([
+    'reference' => 'ORDER-123',
+    'options' => [
+        // 
+    ]
 ]);
 
 if ($status->isSuccess()) {
@@ -224,9 +228,11 @@ Payment::configure([
 $result = Payment::payment([
     'amount' => 1000,
     'reference' => 'ORDER-123',
-    'notif_url' => 'https://your-app.com/webhook',
-    'return_url' => 'https://your-app.com/success',
-    'cancel_url' => 'https://your-app.com/cancel',
+    'options' => [
+        'notif_url' => 'https://your-app.com/webhook',
+        'return_url' => 'https://your-app.com/success',
+        'cancel_url' => 'https://your-app.com/cancel',
+    ],
 ]);
 ```
 
@@ -250,12 +256,12 @@ Payment::configure([
 
 $result = Payment::payment([
     'amount' => 1000,
-    'phone' => '0707070707',
     'reference' => 'ORDER-123',
+    'phone_number' => '0707070707',
 ]);
 
 // Verify transaction
-$status = Payment::verify(['reference_id' => $result['reference_id']]);
+$status = Payment::verify(['reference' => $result['reference']]);
 
 // Check balance
 $balance = Payment::balance();
