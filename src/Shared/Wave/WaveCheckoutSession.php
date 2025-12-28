@@ -1,6 +1,6 @@
 <?php
 
-namespace Bow\Payment\Gateway\IvoryCost\Wave;
+namespace Bow\Payment\Shared\Wave;
 
 /**
  * Wave Checkout Session

@@ -4,9 +4,23 @@ namespace Bow\Payment;
 
 trait Payment
 {
-    public function withPaymentProvider(string $country, string $provider): self
+    /**
+     * Get customer phone number
+     *
+     * @return string
+     */
+    abstract public function usingCustomerPhoneNumber(): string;
+
+    /**
+     * Set payment provider
+     *
+     * @param string $country
+     * @param string $provider
+     * @return self
+     */
+    public function usePaymentProvider(string $country, string $provider): self
     {
-        Processor::withProvider($country, $provider);
+        Processor::useProvider($country, $provider);
 
         return $this;
     }
@@ -21,6 +35,7 @@ trait Payment
         return Processor::payment([
             'amount' => $amount,
             'reference' => $reference,
+            'phone_number' => $this->usingCustomerPhoneNumber(),
             'options' => $options,
         ]);
     }
@@ -35,6 +50,7 @@ trait Payment
         return Processor::transfer([
             'amount' => $amount,
             'reference' => $reference,
+            'phone_number' => $this->usingCustomerPhoneNumber(),
             'options' => $options,
         ]);
     }

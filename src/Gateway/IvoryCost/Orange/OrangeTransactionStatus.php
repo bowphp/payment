@@ -2,6 +2,7 @@
 
 namespace Bow\Payment\Gateway\IvoryCost\Orange;
 
+use Bow\Payment\Common\PaymentStatus;
 use Bow\Payment\Common\ProcessorStatusInterface;
 
 class OrangeTransactionStatus implements ProcessorStatusInterface
@@ -29,7 +30,7 @@ class OrangeTransactionStatus implements ProcessorStatusInterface
      *
      * @return bool
      */
-    public function isFail()
+    public function isFailed()
     {
         return $this->status == 'FAIL';
     }
@@ -72,5 +73,27 @@ class OrangeTransactionStatus implements ProcessorStatusInterface
     public function isPending()
     {
         return $this->status == 'PENDING';
+    }
+
+    /**
+     * Get payment status string
+     *
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        if ($this->isSuccess()) {
+            return PaymentStatus::COMPLETED;
+        }
+
+        if ($this->isPending()) {
+            return PaymentStatus::PENDING;
+        }
+
+        if ($this->isFailed()) {
+            return PaymentStatus::FAILED;
+        }
+
+        return PaymentStatus::UNKNOWN;
     }
 }

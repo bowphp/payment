@@ -2,7 +2,7 @@
 
 namespace Bow\Payment\Gateway\Senegal\Wave;
 
-use Bow\Payment\Gateway\IvoryCost\Wave\WaveGateway as BaseWaveGateway;
+use Bow\Payment\Shared\Wave\WaveGateway as SharedWaveGateway;
 
 /**
  * Wave Gateway for Senegal
@@ -11,7 +11,7 @@ use Bow\Payment\Gateway\IvoryCost\Wave\WaveGateway as BaseWaveGateway;
  * 
  * @link https://docs.wave.com/checkout
  */
-class WaveGateway extends BaseWaveGateway
+class WaveGateway extends SharedWaveGateway
 {
     // Inherits all functionality from the base Wave gateway
     // Wave API is the same for Senegal and Ivory Coast

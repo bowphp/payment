@@ -1,7 +1,8 @@
 <?php
 
-namespace Bow\Payment\Gateway\IvoryCost\Wave;
+namespace Bow\Payment\Shared\Wave;
 
+use Bow\Payment\Common\PaymentStatus;
 use Bow\Payment\Common\ProcessorStatusInterface;
 
 /**
@@ -52,20 +53,20 @@ class WavePaymentStatus implements ProcessorStatusInterface
      *
      * @return bool
      */
-    public function isFail(): bool
+    public function isFailed(): bool
     {
         return $this->session->isPaymentCancelled() || 
                ($this->session->isExpired() && !$this->session->isPaymentSucceeded());
     }
 
     /**
-     * Check if payment failed (alias for isFail)
+     * Check if payment failed (alias for isFailed)
      *
      * @return bool
      */
-    public function isFailed(): bool
+    public function isFaileded(): bool
     {
-        return $this->isFail();
+        return $this->isFailed();
     }
 
     /**
@@ -96,18 +97,18 @@ class WavePaymentStatus implements ProcessorStatusInterface
     public function getStatus(): string
     {
         if ($this->isSuccess()) {
-            return 'success';
+            return PaymentStatus::COMPLETED;
         }
 
         if ($this->isPending()) {
-            return 'pending';
+            return PaymentStatus::PENDING;
         }
 
-        if ($this->isFail()) {
-            return 'failed';
+        if ($this->isFailed()) {
+            return PaymentStatus::FAILED;
         }
 
-        return 'unknown';
+        return PaymentStatus::UNKNOWN;
     }
 
     /**
@@ -223,7 +224,7 @@ class WavePaymentStatus implements ProcessorStatusInterface
             'status' => $this->getStatus(),
             'is_success' => $this->isSuccess(),
             'is_pending' => $this->isPending(),
-            'is_failed' => $this->isFail(),
+            'is_failed' => $this->isFailed(),
             'is_expired' => $this->isExpired(),
             'is_initiated' => $this->isInitiated(),
             'session_id' => $this->getSessionId(),

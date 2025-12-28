@@ -172,7 +172,7 @@ class Processor implements ProcessorGatewayInterface
      * @param string $provider
      * @return void
      */
-    public function withProvider(string $country, string $provider): void
+    public function useProvider(string $country, string $provider): void
     {
         $this->resolveGateway($country, $provider);
     }

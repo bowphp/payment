@@ -90,7 +90,7 @@ class OrangeTransaction
     {
         $status = $this->check($amount, $order_id, $pay_token);
 
-        return $status->isFail();
+        return $status->isFailed();
     }
 
     /**
