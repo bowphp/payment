@@ -1,10 +1,9 @@
 <?php
 
-namespace Bow\Payment\Gateway\IvoryCost\Wave;
+namespace Bow\Payment\Shared\Wave;
 
 use Bow\Payment\Common\PaymentStatus;
 use Bow\Payment\Common\ProcessorStatusInterface;
-use Bow\Payment\Payment;
 
 /**
  * Wave Payment Status
