@@ -274,7 +274,7 @@ $balance = Payment::balance();
 Payment::configure($config);
 
 // Switch to MTN for a specific transaction
-Payment::withProvider('ci', Payment::MTN);
+Payment::useProvider('ci', Payment::MTN);
 Payment::payment($data);
 ```
 

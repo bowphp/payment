@@ -143,11 +143,11 @@ $balance = Payment::balance();
 Payment::configure($config);
 
 // Switch to MTN for a specific transaction
-Payment::withProvider('ci', Payment::MTN);
+Payment::useProvider('ci', Payment::MTN);
 Payment::payment($data);
 
 // Switch back to default provider
-Payment::withProvider('ci', Payment::ORANGE);
+Payment::useProvider('ci', Payment::ORANGE);
 ```
 
 ## Advanced Features
