@@ -57,7 +57,7 @@ class Payment implements ProcessorGatewayInterface
      */
     public const CI_PROVIDER = [
         Payment::ORANGE => \Bow\Payment\Gateway\IvoryCost\OrangeMoney\OrangeMoneyGateway::class,
-        Payment::MTN => \Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\MTNMobileMoneyGateway::class,
+        Payment::MTN => \Bow\Payment\Gateway\IvoryCost\Mono\MonoGateway::class,
         Payment::MOOV => \Bow\Payment\Gateway\IvoryCost\MoovFlooz\MoovFloozGateway::class,
         Payment::WAVE => \Bow\Payment\Gateway\IvoryCost\Wave\WaveGateway::class,
         Payment::DJAMO => \Bow\Payment\Gateway\IvoryCost\Djamo\DjamoGateway::class,

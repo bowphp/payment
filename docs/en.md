@@ -332,9 +332,9 @@ $status = $gateway->verify([
 ### MTN Mobile Money Direct Usage
 
 ```php
-use Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\MTNMobileMoneyGateway;
-use Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\MomoEnvironment;
-use Bow\Payment\Gateway\IvoryCost\MTNMobileMoney\MomoTokenGenerator;
+use Bow\Payment\Gateway\IvoryCost\Mono\MonoGateway;
+use Bow\Payment\Gateway\IvoryCost\Mono\MomoEnvironment;
+use Bow\Payment\Gateway\IvoryCost\Mono\MomoTokenGenerator;
 
 $config = [
     'subscription_key' => 'YOUR_SUBSCRIPTION_KEY',
@@ -351,7 +351,7 @@ $tokenGenerator = new MomoTokenGenerator(
     $environment
 );
 
-$gateway = new MTNMobileMoneyGateway($tokenGenerator, $config, $environment);
+$gateway = new MonoGateway($tokenGenerator, $config, $environment);
 
 $result = $gateway->payment([
     'amount' => 1000,
