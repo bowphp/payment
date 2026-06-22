@@ -3,7 +3,7 @@
     "description": "The payment gateway for Bow Framework",
     "type": "library",
     "require": {
-        "guzzlehttp/guzzle": "^6.5",
+        "guzzlehttp/guzzle": "^6.5 || ^7.0",
         "phpunit/phpunit": "^8"
     },
     "license": "MIT",
