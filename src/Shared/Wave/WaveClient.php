@@ -97,7 +97,7 @@ class WaveClient
     public function retrieveCheckoutSession(string $sessionId): WaveCheckoutSession
     {
         try {
-            $response = $this->http->get("/v1/checkout/sessions/{$sessionId}");
+            $response = $this->http->get("/v1/checkout/sessions/" . rawurlencode($sessionId));
 
             $content = $response->getBody()->getContents();
             $sessionData = json_decode($content, true);
@@ -217,7 +217,7 @@ class WaveClient
     public function refundCheckoutSession(string $sessionId): bool
     {
         try {
-            $response = $this->http->post("/v1/checkout/sessions/{$sessionId}/refund");
+            $response = $this->http->post("/v1/checkout/sessions/" . rawurlencode($sessionId) . "/refund");
             return $response->getStatusCode() === 200;
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             return $this->handleClientException($e);
@@ -246,7 +246,7 @@ class WaveClient
     public function expireCheckoutSession(string $sessionId): bool
     {
         try {
-            $response = $this->http->post("/v1/checkout/sessions/{$sessionId}/expire");
+            $response = $this->http->post("/v1/checkout/sessions/" . rawurlencode($sessionId) . "/expire");
             return $response->getStatusCode() === 200;
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             return $this->handleClientException($e);

@@ -41,7 +41,7 @@ class TransactionLogger
         $this->enabled = $enabled;
 
         if ($this->enabled && !file_exists($this->logPath)) {
-            mkdir($this->logPath, 0755, true);
+            mkdir($this->logPath, 0700, true);
         }
     }
 
@@ -53,6 +53,28 @@ class TransactionLogger
      * @param array $context
      * @return void
      */
+    /**
+     * Recursively mask secret-bearing keys so credentials in gateway
+     * responses are never written to the log files.
+     *
+     * @param array $data
+     * @return array
+     */
+    private function redact(array $data): array
+    {
+        $sensitive = '/(key|secret|passwo?r?d|token|authorization|signature|apikey|credential|private|cvv|pin)/i';
+
+        foreach ($data as $k => $v) {
+            if (is_string($k) && preg_match($sensitive, $k)) {
+                $data[$k] = '[REDACTED]';
+            } elseif (is_array($v)) {
+                $data[$k] = $this->redact($v);
+            }
+        }
+
+        return $data;
+    }
+
     public function log(string $level, string $message, array $context = []): void
     {
         if (!$this->enabled) {
@@ -63,7 +85,7 @@ class TransactionLogger
             'timestamp' => date('Y-m-d H:i:s'),
             'level' => $level,
             'message' => $message,
-            'context' => $context,
+            'context' => $this->redact($context),
         ];
 
         $filename = $this->logPath . '/payment_' . date('Y-m-d') . '.log';
