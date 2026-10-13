@@ -61,7 +61,7 @@ class MonoGateway implements ProcessorGatewayInterface
 
         $amount = $params['amount'];
         $phone = $params['phone_number'];
-        $reference = $params['reference'] ?? uniqid('momo_');
+        $reference = $params['reference'] ?? 'momo_' . bin2hex(random_bytes(8));
         $currency = $params['currency'] ?? 'XOF';
 
         return $payment->requestToPay([

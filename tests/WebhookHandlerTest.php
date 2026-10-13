@@ -26,11 +26,21 @@ class WebhookHandlerTest extends TestCase
             'amount' => 1000,
         ];
         
-        $event = $this->handler->handle($payload);
-        
+        $signature = hash_hmac('sha256', json_encode($payload), $this->secret);
+
+        $event = $this->handler->handle($payload, $signature);
+
         $this->assertInstanceOf(WebhookEvent::class, $event);
         $this->assertEquals('orange', $event->getProvider());
         $this->assertEquals('TX-123', $event->getTransactionId());
+    }
+
+    public function testMissingSignatureIsRejected()
+    {
+        $this->expectException(PaymentException::class);
+
+        // An unsigned webhook must be refused, not trusted.
+        $this->handler->handle(['event' => 'payment.success', 'status' => 'paid', 'amount' => 100000]);
     }
 
     public function testValidateSignature()

@@ -76,6 +76,12 @@ class OrangeTokenGenerator
      */
     public function setUrl(string $url)
     {
+        // Basic-auth credentials are POSTed to this URL, so never allow a
+        // cleartext endpoint.
+        if (stripos($url, 'https://') !== 0) {
+            throw new \InvalidArgumentException('The Orange token endpoint must use HTTPS.');
+        }
+
         $this->get_token_url = $url;
     }
 
@@ -87,6 +93,12 @@ class OrangeTokenGenerator
      */
     public function setTokenGeneratorEndpoint(string $url)
     {
+        // Basic-auth credentials are POSTed to this URL, so never allow a
+        // cleartext endpoint.
+        if (stripos($url, 'https://') !== 0) {
+            throw new \InvalidArgumentException('The Orange token endpoint must use HTTPS.');
+        }
+
         $this->get_token_url = $url;
     }
 

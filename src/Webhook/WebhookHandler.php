@@ -43,10 +43,20 @@ class WebhookHandler
      * @return WebhookEvent
      * @throws PaymentException
      */
-    public function handle(array $payload, ?string $signature = null): WebhookEvent
+    public function handle(array $payload, ?string $signature = null, ?string $rawBody = null): WebhookEvent
     {
-        // Validate signature if provided
-        if ($signature && !$this->validateSignature($payload, $signature)) {
+        // The signature is mandatory. An unsigned webhook must never be trusted,
+        // otherwise anyone can POST a forged "payment success" event (fraud).
+        if (!is_string($signature) || $signature === '') {
+            throw new PaymentException('Missing webhook signature', 401);
+        }
+
+        // Verify against the exact bytes the provider signed when the raw body
+        // is available; re-encoding the decoded array changes key order and
+        // escaping and would never match a real gateway signature.
+        $signed = $rawBody ?? $payload;
+
+        if (!$this->validateSignature($signed, $signature)) {
             throw new PaymentException('Invalid webhook signature', 401);
         }
 
@@ -60,10 +70,14 @@ class WebhookHandler
      * @param string $signature
      * @return bool
      */
-    public function validateSignature(array $payload, string $signature): bool
+    public function validateSignature(string|array $signed, string $signature): bool
     {
-        $expectedSignature = hash_hmac('sha256', json_encode($payload), $this->secret);
-        
+        // Prefer the raw request body (string); fall back to canonical JSON for
+        // callers that only have the decoded array.
+        $message = is_array($signed) ? json_encode($signed) : $signed;
+
+        $expectedSignature = hash_hmac('sha256', (string) $message, $this->secret);
+
         return hash_equals($expectedSignature, $signature);
     }
 
@@ -79,6 +93,7 @@ class WebhookHandler
 
         return [
             'payload' => $data ?? [],
+            'raw' => $body,
             'signature' => $_SERVER['HTTP_X_SIGNATURE'] ?? $_SERVER['HTTP_X_WEBHOOK_SIGNATURE'] ?? null,
             'headers' => getallheaders(),
         ];
